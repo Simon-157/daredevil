@@ -1,0 +1,15 @@
+.progress {
+  height: 100%;
+  background-color:var(--app-green);
+  transition: width 0.3s ease-in-out;
+  border-radius: 5px;
+}
+
+.progress__bar {
+  width: 100%;
+  height: 10px;
+  background-color: var(--app-white);
+  border-radius: 5px;
+  overflow: hidden;
+  margin-bottom: 2rem;
+}

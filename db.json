@@ -1,0 +1,161 @@
+{
+  "users": [
+    {
+      "id": 1,
+      "name": "John Doe",
+      "email": "johndoe@example.com",
+      "journeys": [
+        {
+          "id": 1,
+          "name": "Journey to the West",
+          "created_at": "2023-06-01",
+          "start_date": "2023-06-13",
+          "end_date": "2023-06-15",
+          "swaps_made": 2,
+          "milestone": "completed",
+          "journey_freaks": [
+            {
+              "name": "Freak 111",
+              "id": 1,
+              "freak_id": 1,
+              "milestone": "passed",
+              "rating": 5
+            },
+            {
+              "name": "Freak 11",
+              "id": 2,
+              "freak_id": 2,
+              "milestone": "aborted",
+              "rating": 4
+            }
+          ]
+        },
+
+        {
+          "id": 5,
+          "name": "Journey to the East",
+          "created_at": "2023-06-01",
+          "start_date": "2023-06-13",
+          "end_date": "2023-06-15",
+          "swaps_made": 2,
+          "milestone": "completed",
+          "journey_freaks": [
+            {
+              "name": "Freak 0",
+              "id": 1,
+              "freak_id": 1,
+              "milestone": "passed",
+              "rating": 5
+            },
+            {
+              "name": "Freak 00",
+              "id": 2,
+              "freak_id": 2,
+              "milestone": "aborted",
+              "rating": 4
+            }
+          ]
+        },
+        {
+          "id": 2,
+          "name": "Journey to the North",
+          "created_at": "2022-02-01",
+          "start_date": "2022-02-05",
+          "end_date": "2022-02-10",
+          "swaps_made": 1,
+          "milestone": "abandoned",
+          "journey_freaks": [
+            {
+              "name": "Freak 45",
+              "id": 3,
+              "freak_id": 3,
+              "milestone": "missed"
+            }
+          ]
+        },
+        {
+          "id": 45,
+          "name": "Journey to the South",
+          "created_at": "2022-02-01",
+          "start_date": "2022-02-05",
+          "end_date": "2022-02-10",
+          "swaps_made": 1,
+          "milestone": "abandoned",
+          "journey_freaks": [
+            {
+              "name": "Freak 34",
+              "id": 3,
+              "freak_id": 3,
+              "milestone": "missed"
+            }
+          ]
+        },
+        {
+          "id": 40,
+          "name": "Journey to no where",
+          "created_at": "2022-02-01",
+          "start_date": "2022-02-05",
+          "end_date": "2022-02-10",
+          "swaps_made": 1,
+          "milestone": "abandoned",
+          "journey_freaks": [
+            {
+              "name": "Freak 3",
+              "id": 3,
+              "freak_id": 3,
+              "milestone": "missed"
+            }
+          ]
+        }
+      ],
+      "joined_at": "2022-01-01"
+    }
+  ],
+
+  "darepool": [
+    {
+      "id": 1,
+      "short_name": "Dare 1",
+      "description": "Description of Freak 1",
+      "shared_experiences": [
+        {
+          "id": 1,
+          "user_id": 1,
+          "content": "Shared Experience 1",
+          "date_created": "2022-01-02"
+        },
+        {
+          "id": 2,
+          "user_id": 1,
+          "content": "Shared Experience 2",
+          "date_created": "2022-01-03"
+        }
+      ],
+      "created_at": "2022-01-01",
+      "created_by": 1
+    },
+    {
+      "id": 2,
+      "short_name": "Freak 2",
+      "description": "Description of Freak 2",
+      "shared_experiences": [
+        {
+          "id": 3,
+          "user_id": 1,
+          "content": "Shared Experience 3",
+          "date_created": "2022-01-04"
+        }
+      ],
+      "created_at": "2022-01-01",
+      "created_by": 1
+    },
+    {
+      "id": 3,
+      "short_name": "Freak 3",
+      "description": "Description of Freak 3",
+      "shared_experiences": [],
+      "created_at": "2022-01-01",
+      "created_by": 1
+    }
+  ]
+}

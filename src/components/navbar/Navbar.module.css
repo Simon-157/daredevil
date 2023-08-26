@@ -1,0 +1,139 @@
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  background-color: var(--app-background-2);
+  box-shadow: rgba(0, 0, 0, 0.5) 0px 7px 29px 0px;
+  position: relative;
+  z-index: 999;
+  width: 100vw;
+}
+
+.navbar__logo {
+  display: none;
+}
+
+.navbar__menu {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100vw;
+}
+
+.navbar__menu__item a,
+.navbar__menu__item__active a {
+  display: flex;
+  flex-flow: column;
+  padding: 1rem 0.8rem;
+  gap: 0.5rem;
+  color: var(--app-background-3);
+  text-transform: capitalize;
+  text-align: center;
+}
+
+.navbar__menu__item a:hover .navbar__menu__item__icon,
+.navbar__menu__item__active a:hover .navbar__menu__item__icon {
+  animation: wobble 0.5s ease-in-out alternate infinite;
+}
+
+@keyframes wobble {
+  0% {
+    transform: translateY(-0.3rem);
+  }
+  50% {
+    transform: translateY(0.6rem);
+  }
+  100% {
+    transform: translateY(initial);
+  }
+}
+
+.navbar__menu__item a:hover,
+.navbar__menu__item__active a {
+  color: var(--app-green);
+}
+
+.navbar__menu__item a:hover path,
+.navbar__menu__item__active a path {
+  fill: var(--app-green);
+}
+
+.navbar__menu__item:first-child a:hover path,
+.navbar__menu__item__active:first-child a path {
+  fill: transparent;
+  stroke: var(--app-green);
+}
+
+.extra__menu {
+  display: none;
+  flex-grow: 1;
+}
+
+.extra__menu__float {
+  display: block;
+  position: absolute;
+  bottom: 100%;
+  right: 0;
+  display: flex;
+  background-color: var(--app-background-2);
+}
+
+@media screen and (min-width: 768px) {
+  .navbar {
+    width: 16vw;
+    height: -webkit-fill-available;
+    display: flex;
+    flex-flow: column;
+    padding: 1rem;
+    gap: 4rem;
+  }
+  .navbar__menu {
+    flex-flow: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    width: 100%;
+    flex-grow: 4;
+  }
+
+  .navbar__menu__item,
+  .navbar__menu__item__active {
+    width: 100%;
+  }
+
+  .navbar__menu__item:hover,
+  .navbar__menu__item__active {
+    background-color: rgba(191, 249, 231, 0.1);
+    border-radius: 0.2rem;
+  }
+
+  .navbar__menu__item a,
+  .navbar__menu__item__active a {
+    flex-flow: row;
+    align-items: center;
+    font-size: 120%;
+    margin: 0 0.5rem;
+    gap: 0.8rem;
+  }
+
+  .navbar__logo {
+    display: flex;
+    padding: 1rem 0;
+    justify-content: center;
+  }
+
+  .navbar__logo path {
+    fill: var(--app-green);
+  }
+
+  .navbar__menu .navbar__menu__item:last-child {
+    display: none;
+  }
+
+  .extra__menu {
+    display: block;
+  }
+
+  .extra__menu__float {
+    display: block;
+    position: unset;
+  }
+}

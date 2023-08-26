@@ -1,0 +1,28 @@
+.wrapper {
+  position: relative;
+}
+
+.wrapper svg circle {
+  fill: transparent;
+  stroke-width: 6px;
+}
+.wrapper svg circle:last-child {
+  animation: load 1s ease-in-out forwards;
+}
+
+@keyframes load {
+  0% {
+    stroke-dashoffset: var(--from);
+  }
+  100% {
+    stroke-dashoffset: var(--stroke-dashoffset);
+  }
+}
+
+.wrapper p {
+  position: absolute;
+  top: 42%;
+  left: 50%;
+  transform: translate(-45%, -45%);
+  font-size: 150%;
+}

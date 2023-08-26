@@ -1,0 +1,46 @@
+.container {
+  display: flex;
+  align-items: flex-start;
+  padding: 1.5rem;
+}
+
+.textColumn {
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 42px;
+  padding-top: 1.5rem;
+  color: var(--app-yellow);
+}
+
+.imageColumn {
+  opacity: 0.5;
+}
+
+img {
+  max-width: 100%;
+  transform: scale(2);
+  position: relative;
+  left: 4rem;
+  top: 7rem;
+}
+
+.text__row {
+  color: var(--app-yellow);
+  padding: 0 !important;
+  line-height: 4.5;
+}
+
+
+.arrow{
+  color: var(--app-green);
+  cursor: pointer;
+}
+
+@media (min-width: 768px) {
+  img {
+    transform: scale(1);
+    top: 0;
+    left: 0;
+  }
+}
+

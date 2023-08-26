@@ -1,0 +1,30 @@
+.button {
+  border-radius: 0.2rem;
+  padding: 1rem;
+  border: none;
+  outline: none;
+  font-size: 1.1rem;
+  cursor: pointer;
+  border: 0.1rem solid var(--app-green);
+  min-width: 10rem;
+}
+
+.solid {
+  background-color: var(--app-green);
+  color: var(--app-background-2);
+}
+
+.solid:hover {
+  background-color: var(--app-hover-green);
+}
+
+.outlined {
+  background-color: transparent;
+  color: var(--app-green);
+}
+
+.outlined:hover {
+  border-color: transparent;
+  background-color: var(--app-green);
+  color: var(--app-dark-text);
+}

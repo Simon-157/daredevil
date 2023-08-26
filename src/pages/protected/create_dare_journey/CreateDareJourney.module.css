@@ -1,0 +1,16 @@
+.journeys {
+  width: 100vw;
+  height: 100%;
+  display: flex;
+  flex-flow: column;
+  justify-content: space-around;
+  align-items: center;
+  padding: 0.5rem 1rem;
+}
+
+.journeys section {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-flow: column;
+}

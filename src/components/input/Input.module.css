@@ -1,0 +1,52 @@
+.wrapper {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  width: min-content;
+}
+
+.wrapper label {
+  cursor: pointer;
+  color: var(--app-background-3);
+}
+
+.input {
+  background-color: var(--app-background-2);
+  padding: 1rem;
+  color: #aaa;
+  font-family: var(--app-font-primary);
+}
+
+/* TEXT */
+.input[type="text"] {
+  border-bottom: 0.1rem solid transparent;
+}
+.input[type="text"]:focus {
+  border-bottom: 0.1rem solid var(--app-green);
+}
+
+.input:focus + label {
+  color: var(--app-green);
+}
+
+/* RADIO  */
+
+.input[type="radio"] {
+  background-color: var(--app-background-1);
+  cursor: pointer;
+  padding: 0.5rem;
+  appearance: none;
+  outline: 0.2rem solid var(--app-background-3);
+  border: 0.3rem solid transparent;
+  border-radius: 50%;
+}
+
+.input[type="radio"]:checked {
+  outline: 0.2rem solid var(--app-green);
+  border: 0.3rem solid var(--app-background-2);
+  background-color: var(--app-green);
+}
+
+.input:checked + label {
+  color: var(--app-green);
+}
