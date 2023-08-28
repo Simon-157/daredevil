@@ -1,0 +1,53 @@
+.wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100vw;
+    height: 100vh;
+    background-color: transparent;
+}
+
+.wrapper article {
+    display: flex;
+    position: absolute;
+
+}
+
+
+.socialBtn {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    flex-flow: column;
+    gap: 1.1em;
+}
+
+.welcome {
+    color: var(--app-white);
+    display: flex;
+    flex-flow: column;
+    justify-content: center;
+    align-items: center;
+    gap: 0.3em;
+}
+
+.welcome h1{
+    text-align: center;
+    font-size: 200%;
+}
+
+
+.welcome p{
+    width: 70%;
+    text-align: center;
+    color:aliceblue;
+    font-size: 120%;
+}
+
+.welcome span {
+    color: var(--app-green)
+}
+
+.socialBtn img {
+    position: inherit;
+}

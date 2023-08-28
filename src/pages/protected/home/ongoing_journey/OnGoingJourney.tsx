@@ -6,35 +6,65 @@ import { BulbIcon } from "@assets/icons/Icons";
 import { CorrectIcon, SwapIcon, AbortIcon } from "@assets/icons/Icons";
 import useAuth from "@hooks/useAuth";
 import CircularProgressBar from "@components/progress_bar/circular_progress_bar/CircularProgressBar";
+import { journeyController } from "../../../../firebase/controllers/Journeys.controller";
+import { JourneyDare } from "../../../../types/FreakPoolType";
+import { Journey, JourneyMetricsType } from "../../../../types/UserType";
+import { useEffect, useState } from "react";
 const OnGoingJourney = () => {
 
-
+  const { getJourneysByUser } = journeyController()
   const { auth } = useAuth();
-  // Filter journeys based on the current date
+  const[total, setTotal] = useState(0)
+  const [currentJourneys, setCurrentJourneys] = useState<Journey[]>([]); // Specify the type here
   const currentDate = new Date().toISOString().split("T")[0];
-  const currentJourneys = auth.journeys.documents.filter((journey: Journey) => journey.start_date === currentDate);
+
+    // Fetch journeys asynchronously and then filter
+    const fetchAndFilterJourneys = async () => {
+      const journeys = await getJourneysByUser(auth.user.id);
+      const currentJourneys = journeys.filter((journey: Journey) => {
+        const journeyStartDate = journey.start_date.toDate();
+        const journeyStartDateString = journeyStartDate.toISOString().split("T")[0];
+        return journeyStartDateString === currentDate;
+      });
+      setCurrentJourneys(currentJourneys)
+      return currentJourneys;
+    };
+  
+    useEffect(() => {
+      const fetchData = async () => {
+        const journeys = await fetchAndFilterJourneys();
+        setCurrentJourneys(journeys);
+      };
+  
+      fetchData(); // Call the async function
+    }, []); 
+  
 
   // Compute metrics for each current journey
   const metrics: JourneyMetricsType[] = currentJourneys.map((journey: Journey) => {
+    const numDares = journey.journey_dares.length
     const swaps: number = journey.swaps_made;
     const jname = journey.name
-    const miles: string = journey.milestone;
-    const passed: number = journey.journey_freaks.filter((freak: JourneyFreak) => freak.milestone === "passed").length;
-    const aborted: number = journey.journey_freaks.filter((freak: JourneyFreak) => freak.milestone === "aborted").length;
-    const missed: number = journey.journey_freaks.filter((freak: JourneyFreak) => freak.milestone === "missed").length;
+    const miles = journey.milestone;
+    const passed: number = journey.journey_dares.filter((dare: JourneyDare) => dare.milestone === "passed").length;
+    const aborted: number = journey.journey_dares.filter((dare: JourneyDare) => dare.milestone === "aborted").length;
+    const missed: number = journey.journey_dares.filter((dare: JourneyDare) => dare.milestone === "missed").length;
 
-    const startDate = new Date(journey.start_date);
-    const endDate = new Date(journey.end_date);
+    // console.log(journey.s);
+    const startDate = journey.start_date.toDate();
+    const endDate = journey.end_date.toDate();
     const timeLeft = endDate.getTime() - startDate.getTime();
 
     const hours = Math.floor(timeLeft / (1000 * 60 * 60));
     const minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
     const seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
 
-    const timeLeftFormatted = `${hours}:${minutes}:${seconds}`;
+    // const timeLeftFormatted = `${hours}:${minutes}:${seconds}`;
+    const timeLeftFormatted = `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
 
     return {
-      journeyId:journey.id,
+      totalDares:numDares,
+      journeyId: journey.id,
       name: jname,
       swapsMade: swaps,
       milestone: miles,
@@ -44,6 +74,9 @@ const OnGoingJourney = () => {
       timeLeftFormatted: timeLeftFormatted,
     };
   });
+
+  console.log(metrics.at(0));
+  
 
 
   return (
@@ -57,8 +90,8 @@ const OnGoingJourney = () => {
         <div className={OngoingJourneyStyles.stats}>
           statistics
           {/* TODO : Map the metric for the statistics here with style*/}
-          
-          </div>
+
+        </div>
         <div className={OngoingJourneyStyles.mission_content}>
           <h1>Ask your crush out</h1>
           <Button
@@ -72,16 +105,16 @@ const OnGoingJourney = () => {
           </Button>
         </div>
         <div className={OngoingJourneyStyles.mission_stats}>
-          <CircularProgressBar total={28} chunk={7} label="completed" />
-          <CircularProgressBar total={3} chunk={3} label="swaps" />
-          <CircularProgressBar total={3} chunk={1} label="aborted" />
+          <CircularProgressBar total={metrics.at(0)?.totalDares} chunk={metrics.at(0)?.passedFreaks} label="completed" />
+          <CircularProgressBar total={metrics.at(0)?.totalDares} chunk={metrics.at(0)?.swapsMade} label="swaps" />
+          <CircularProgressBar total={metrics.at(0)?.totalDares} chunk={metrics.at(0)?.abortedFreaks} label="aborted" />
         </div>
       </div>
       <div className={OngoingJourneyStyles.timer_action_buttons}>
         <img src={darkClock} alt={darkClock} />
 
         {/* TODO : replace with timeLeftFormatted */}
-        <h1>07:04:12</h1>
+        <h1> {metrics.at(0)?.timeLeftFormatted}</h1>
         <div className={OngoingJourneyStyles.action_buttons}>
           <Button
             style={{

@@ -1,0 +1,46 @@
+/* GridOverlay.scss */
+
+.absolute {
+    position: absolute;
+}
+
+.inset-0 {
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+}
+
+.overflow-hidden {
+    overflow: hidden;
+}
+
+.bg-grid {
+    background-image: url("../../../public/bg.svg");
+}
+
+.bg-center {
+    background-position: center;
+}
+
+.mask {
+    mask-image: linear-gradient(319deg,#333131,#022525,#040404);;
+}
+
+.bg-gradient{
+    background: linear-gradient(319deg,#333131,#022525,#040404);
+    background-size: 180% 180%;
+    animation: gradient-animation 21s ease infinite;
+  }
+  
+  @keyframes gradient-animation {
+    0% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+    100% {
+      background-position: 0% 50%;
+    }
+  }

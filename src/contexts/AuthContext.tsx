@@ -1,4 +1,5 @@
 import { createContext, useState, ReactNode, Dispatch, SetStateAction } from "react";
+import { AuthObject } from "../types/UserType";
 
 interface AuthContextProps {
   auth?: AuthObject;

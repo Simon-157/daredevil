@@ -44,3 +44,11 @@ select {
 a {
   text-decoration: none;
 }
+
+
+.background-grid {
+  height: 100vh;
+  background-image: linear-gradient(#423c58 0.5px, transparent 0.5px, transparent calc(100% - 0.5px), #423c58 calc(100% - 0.5px)), linear-gradient(90deg, #423c58 0.5px, transparent 0.5px, transparent calc(100% - 0.5px), #423c58 calc(100% - 0.5px));
+  background-size: 6.25% 9.090909090909092%;
+  border: 0.5px solid #423c58;
+}

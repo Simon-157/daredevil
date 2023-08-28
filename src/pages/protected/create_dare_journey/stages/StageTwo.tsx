@@ -4,6 +4,7 @@ import Cover from "@assets/images/man-smiling-and-holding-smartphone.png";
 import Input from "@components/input/Input";
 import Button from "@components/button/Button";
 import GoBack from "./GoBack";
+import { Timestamp } from 'firebase/firestore';
 
 interface RadioOption {
   label: string;
@@ -47,9 +48,14 @@ const StageTwo: React.FC<StageTwoProps> = ({ handleSubmit, handleGoBack }) => {
 
 
   const handleStageTwoSubmit = () => {
+    const startDateTimestamp = Timestamp.fromDate(new Date(currentDate.toISOString()));
+
+    // Convert selectedOption (ISO date string) to Firestore Timestamp
+    const endDateTimestamp = Timestamp.fromDate(new Date(selectedOption));
+  
     const data = {
-      startDate: currentDate.toISOString(),
-      endDate: selectedOption,
+      startDate: startDateTimestamp,
+      endDate: endDateTimestamp,
     };
 
     handleSubmit(data);

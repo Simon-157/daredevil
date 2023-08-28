@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 
-import StageCircle from "@components/stage_circle/StageCircle";
 import StageOne from "./stages/StageOne";
 import StageThree from "./stages/StageThree";
 import StageTwo from "./stages/StageTwo";
@@ -8,13 +7,17 @@ import StageFour from "./stages/StageFour";
 
 
 import CreateDareJourneyStyles from "./CreateDareJourney.module.css";
-import AW_API from "@appwrite/api";
-import useAuth from "@hooks/useAuth";
+import { journeyController } from "../../../firebase/controllers/Journeys.controller";
+import { Journey } from "../../../types/UserType";
+import { Timestamp } from "firebase/firestore";
+import { useFirebaseAuth } from "../../../firebase/auth/auth";
+import StageCircle from "../../../components/stage_circle/StageCircle";
 
 const CreateDareJourney: React.FC = () => {
+  const {createJourney} = journeyController()
   const [stage, setStage] = useState<number>(1);
   const [formData, setFormData] = useState<any>({});
-  const {auth} = useAuth()
+  const {user} = useFirebaseAuth()
 
   const handleSubmit = async (data: any) => {
     setFormData((prevData:any) => ({ ...prevData, [stage]: data }));
@@ -23,16 +26,19 @@ const CreateDareJourney: React.FC = () => {
       setStage((prevStage) => prevStage + 1);
     } else {
       console.log("Posting data to db:", formData);
-      const journey = {
-          name:formData[1].name,
-          dares:  ['Make money for fun', 'Drive to the Make it', 'Dive into it'],  //replace with the selected dares from the darepool
-          endDate : formData[2].endDate,
-          milestone :  "ongoing",           //default value -- supposed to have been configured in db set up
-          startDate : formData[2].startDate,
-          swapsMade : 0,
-          userId : auth.user.id   //reference to the current authenticated user
+     
+      const journey:Journey= {
+        name: formData[1].name,
+        journey_dares: ['Make money for fun', 'Drive to the Make it', 'Dive into it'],
+        end_date: formData[2].endDate,
+        milestone: "ongoing",
+        start_date: formData[2].startDate,
+        swaps_made: 0,
+        created_by: user!.uid,
+        created_at: Timestamp.now(),
+        id: ""
       }
-      const res = await AW_API.createJourney(journey)
+      const res = await createJourney(journey)
       console.log("response" ,res);
     }
   };

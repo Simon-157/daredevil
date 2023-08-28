@@ -1,18 +1,25 @@
-type Darepool = Dare[];
+import firebase from "firebase/compat/app";
 
-type Dare = {
+export type Darepool = Dare[];
+
+export interface JourneyDare {
+  id: string;
+  dare_id: string;
+  milestone: string;
+}
+
+export interface Dare {
   id: string;
   short_name: string;
   description: string;
-  shared_experiences: SharedExperience[];
-  created_at: Date;
+  created_at: firebase.firestore.Timestamp;
   created_by: string;
-};
+  shared_experiences: SharedExperience[];
+}
 
-type SharedExperience = {
+export interface SharedExperience {
   id: string;
   user_id: string;
   content: string;
-  date_created: Date;
-};
-
+  date_created: firebase.firestore.Timestamp;
+}

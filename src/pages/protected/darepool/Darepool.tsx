@@ -1,31 +1,85 @@
+import { useInfiniteQuery } from "react-query";
 import DarepoolStyles from "./Darepool.module.css";
-import useAuth from "@hooks/useAuth";
-import { API_URL } from "@utils/constants";
-import axios, { AxiosResponse } from "axios";
+import Button from "../../../components/button/Button";
+import { Dare } from "../../../types/FreakPoolType";
+import { darepoolController } from "../../../firebase/controllers/DarePool.controller";
 
 const Darepool = () => {
-  /**
-   * TODO: check if darepool exists in auth object; if not fetch from db and cache it
-   * TODO: implement a throttling fetch mechanism -- fetch more as user scrolls [NOT PART OF SUBMISSION]
-   */
+  const {getAllDares} = darepoolController();
 
-  const { auth } = useAuth();
+  // Fetch dares using useInfiniteQuery for infinite scrolling
+  const {
+    data,
+    fetchNextPage,
+    hasNextPage,
+    isFetchingNextPage,
+    status,
+  } = useInfiniteQuery(["dares"], getAllDares, {
+    getNextPageParam: (lastPage, pages) => {
+      const lastDocumentId = lastPage[lastPage.length - 1]?.id;
+  
+      if (!lastDocumentId) {
+        return null; // No more pages to fetch
+      }
+  
+      // Return the parameter for the next page fetch
+      return lastDocumentId;
+    },
+  });
+  
 
-  if (!auth.darepool) {
-    // fetch darepools from db
+  if (status === "loading") {
+    return <p>Loading...</p>;
   }
-  console.log(auth);
+
+  if (status === "error") {
+    return <p>Error fetching dares</p>;
+  }
+
   return (
     <div className={DarepoolStyles.darepool}>
       <div className={DarepoolStyles.stats}>
-        <h2>100 dares</h2>
+        <h2>{data?.pages.flatMap(page => page).length} dares</h2>
+        <Button
+          type="outlined"
+          style={{
+            padding: "10px",
+            position: "absolute",
+            right: "1rem",
+            border: "1px solid rgba(234, 0, 255, 0.126)",
+            fontSize: "20px",
+            backgroundColor: "rgba(234, 233, 255, 0.126)",
+          }}
+         
+        >
+          create dare
+        </Button>
       </div>
       <div className={DarepoolStyles.dareList}>
-        <article className={DarepoolStyles.dare}>
-          <h2>Dare Name</h2>
-          <small>description</small>
-        </article>
+        {data?.pages.flatMap(page => page).map((dare:Dare) => (
+          <article className={DarepoolStyles.dare} key={dare.id}>
+            <h2>{dare.short_name}</h2>
+            <small>{dare.description}</small>
+          </article>
+
+        ))}
+          <Button
+          type="outlined"
+          style={{
+            display:"flex",
+            justifyContent:"center",
+            padding: "10px",
+            border: "1px solid rgba(234, 0, 255, 0.126)",
+            fontSize: "20px",
+            backgroundColor: "rgba(234, 233, 255, 0.126)",
+          }}
+          onClick={fetchNextPage}
+          disabled={!hasNextPage || isFetchingNextPage}
+        >
+          {isFetchingNextPage ? "Loading..." : "Load More"}
+        </Button>
       </div>
+      
     </div>
   );
 };
