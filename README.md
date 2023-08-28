@@ -1,7 +1,6 @@
 ![GitHub repo size](https://img.shields.io/github/repo-size/faddalibrahim/freak-buzz)
 
-# Freak Buzz - Appwrite Hackathon Submission
-
+# DAREDEVIL
 A web (and soon-to-be mobile) app that primarily allows you to create a timeline of challenges to push you out of your comfort zone.
 
 Other Features
