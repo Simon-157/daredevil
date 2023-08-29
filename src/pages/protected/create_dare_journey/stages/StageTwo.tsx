@@ -76,6 +76,7 @@ const StageTwo: React.FC<StageTwoProps> = ({ handleSubmit, handleGoBack }) => {
               name="duration"
               value={option.value}
               onChange={handleOptionChange}
+               // @ts-ignore
               checked={selectedOption === option.value}
             />
           ))}

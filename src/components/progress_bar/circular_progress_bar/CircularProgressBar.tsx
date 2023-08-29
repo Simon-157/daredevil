@@ -36,6 +36,7 @@ export const CircularProgressBar = ({
           strokeDasharray={circumference}
           strokeDashoffset={offset}
           stroke={arcColor}
+           // @ts-ignore
           style={{ "--stroke-dashoffset": offset, "--from": circumference }}
         />
       </svg>

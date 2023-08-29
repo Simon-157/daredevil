@@ -30,6 +30,7 @@ const CreateDareJourney: React.FC = () => {
      
       const journey:Journey= {
         name: formData[1].name,
+         // @ts-ignore
         journey_dares: ['Make money for fun', 'Drive to the Make it', 'Dive into it'],
         end_date: formData[2].endDate,
         milestone: "ongoing",

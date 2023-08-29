@@ -73,6 +73,7 @@ const Darepool = () => {
             fontSize: "20px",
             backgroundColor: "rgba(234, 233, 255, 0.126)",
           }}
+           // @ts-ignore
           onClick={fetchNextPage}
           disabled={!hasNextPage || isFetchingNextPage}
         >
