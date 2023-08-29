@@ -1,6 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import { QueryClient, QueryClientProvider } from "react-query"; // Import QueryClient and QueryClientProvider
+import { QueryClient, QueryClientProvider } from "react-query"; 
 import App from "./App";
 import "@css/global.css";
 import ErrorBoundary from "./pages/errors/error_boundary/ErrorBoundary";
