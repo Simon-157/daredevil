@@ -14,6 +14,7 @@ import { useFirebaseAuth } from "../../../firebase/auth/auth";
 import StageCircle from "../../../components/stage_circle/StageCircle";
 
 const CreateDareJourney: React.FC = () => {
+  
   const {createJourney} = journeyController()
   const [stage, setStage] = useState<number>(1);
   const [formData, setFormData] = useState<any>({});

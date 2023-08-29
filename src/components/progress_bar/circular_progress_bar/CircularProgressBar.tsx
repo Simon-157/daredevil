@@ -1,7 +1,7 @@
 import circularProgressBarStyles from "./CircularProgressBar.module.css";
 
 type CircularProgressBarType = {
-  total: number;
+  total: number ;
   chunk: number;
   label: string;
   bgColor: string;
@@ -23,7 +23,7 @@ export const CircularProgressBar = ({
   const radius = centerX - 10;
   const circumference = Math.ceil(2 * Math.PI * radius);
 
-  const offset = Math.ceil(circumference * (1 - chunk / total));
+  const offset = String(Math.ceil(circumference * (1 - chunk / total)));
 
   return (
     <div className={circularProgressBarStyles.wrapper}>

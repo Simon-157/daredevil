@@ -1,11 +1,11 @@
 //components
-import Button from "@components/button/Button";
 import Cover from "@assets/images/man-standing-with-hands-in-pockets.png";
 
 import NoOngoingJourneyStyles from "./NoOngoingJourney.module.css";
 
 import { useNavigate } from "react-router-dom";
-import useAuth from "@hooks/useAuth";
+import Button from "../../../../components/button/Button";
+import useAuth from "../../../../hooks/useAuth";
 
 const NoDareJourney = () => {
 
@@ -26,7 +26,7 @@ const NoDareJourney = () => {
       <div className={NoOngoingJourneyStyles.home__wrapper}>
         <section className={NoOngoingJourneyStyles.home__wrapper__text}>
           <h2>
-            Welcome, <span>{auth.user.name}</span>
+            Welcome, <span>{auth?.user.name}</span>
           </h2>
           <p>
             umm, it seems you haven't created a{" "}

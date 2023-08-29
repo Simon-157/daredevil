@@ -1,12 +1,11 @@
 import React, { ChangeEvent, useState } from 'react';
 
 //components
-import Input from '@components/input/Input';
-import Button from '@components/button/Button';
 
-//styles
-import { titleInputStyle, descriptionInputStyle, buttonStyle } from '@utils/constants';
 import GoBack from './GoBack';
+import Button from '../../../../components/button/Button';
+import Input from '../../../../components/input/Input';
+import { titleInputStyle, buttonStyle, descriptionInputStyle } from '../../../../utils/constants';
 
 
 interface StageFourProps {
@@ -15,6 +14,7 @@ interface StageFourProps {
   }
 
 const StageFour: React.FC<StageFourProps> = ({ handleGoBack })=> {
+
 
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');

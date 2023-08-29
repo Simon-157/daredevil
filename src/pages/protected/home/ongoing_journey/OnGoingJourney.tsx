@@ -1,56 +1,52 @@
 import OngoingJourneyStyles from "./OngoingJourney.module.css";
 import darkBell from "@assets/images/dark-bell.png";
 import darkClock from "@assets/images/dark-clock.png";
-import Button from "@components/button/Button";
-import { BulbIcon } from "@assets/icons/Icons";
-import { CorrectIcon, SwapIcon, AbortIcon } from "@assets/icons/Icons";
-import useAuth from "@hooks/useAuth";
-import CircularProgressBar from "@components/progress_bar/circular_progress_bar/CircularProgressBar";
 import { journeyController } from "../../../../firebase/controllers/Journeys.controller";
 import { JourneyDare } from "../../../../types/FreakPoolType";
 import { Journey, JourneyMetricsType } from "../../../../types/UserType";
 import { useEffect, useState } from "react";
+import { CorrectIcon, SwapIcon, AbortIcon, BulbIcon } from "../../../../assets/icons/Icons";
+import Button from "../../../../components/button/Button";
+import CircularProgressBar from "../../../../components/progress_bar/circular_progress_bar/CircularProgressBar";
+import useAuth from "../../../../hooks/useAuth";
 const OnGoingJourney = () => {
 
-  const { getJourneysByUser } = journeyController()
+  const { getJourneysByUser } = journeyController();
   const { auth } = useAuth();
-  const[total, setTotal] = useState(0)
   const [currentJourneys, setCurrentJourneys] = useState<Journey[]>([]); // Specify the type here
-  const currentDate = new Date().toISOString().split("T")[0];
 
-    // Fetch journeys asynchronously and then filter
-    const fetchAndFilterJourneys = async () => {
-      const journeys = await getJourneysByUser(auth.user.id);
-      const currentJourneys = journeys.filter((journey: Journey) => {
-        const journeyStartDate = journey.start_date.toDate();
-        const journeyStartDateString = journeyStartDate.toISOString().split("T")[0];
-        return journeyStartDateString === currentDate;
-      });
-      setCurrentJourneys(currentJourneys)
-      return currentJourneys;
+  useEffect(() => {
+    const fetchData = async () => {
+      const journeys = await fetchAndFilterJourneys();
+      setCurrentJourneys(journeys);
     };
-  
-    useEffect(() => {
-      const fetchData = async () => {
-        const journeys = await fetchAndFilterJourneys();
-        setCurrentJourneys(journeys);
-      };
-  
-      fetchData(); // Call the async function
-    }, []); 
-  
+
+    fetchData(); // Call the async function
+  }, []);
+
+  // Fetch journeys asynchronously and then filter
+  const fetchAndFilterJourneys = async () => {
+    const journeys = await getJourneysByUser(auth!.user.id);
+    const currentDate = new Date().toISOString().split("T")[0];
+    const filteredJourneys = journeys.filter((journey: Journey) => {
+      const journeyStartDate = journey.start_date.toDate();
+      const journeyStartDateString = journeyStartDate.toISOString().split("T")[0];
+      return journeyStartDateString === currentDate;
+    });
+    return filteredJourneys;
+  };
+
 
   // Compute metrics for each current journey
-  const metrics: JourneyMetricsType[] = currentJourneys.map((journey: Journey) => {
-    const numDares = journey.journey_dares.length
+  const metrics: JourneyMetricsType[] = currentJourneys?.map((journey: Journey) => {
+    const numDares:number = journey.journey_dares.length
     const swaps: number = journey.swaps_made;
-    const jname = journey.name
+    const jname:string = journey.name
     const miles = journey.milestone;
     const passed: number = journey.journey_dares.filter((dare: JourneyDare) => dare.milestone === "passed").length;
     const aborted: number = journey.journey_dares.filter((dare: JourneyDare) => dare.milestone === "aborted").length;
     const missed: number = journey.journey_dares.filter((dare: JourneyDare) => dare.milestone === "missed").length;
 
-    // console.log(journey.s);
     const startDate = journey.start_date.toDate();
     const endDate = journey.end_date.toDate();
     const timeLeft = endDate.getTime() - startDate.getTime();
@@ -75,7 +71,7 @@ const OnGoingJourney = () => {
     };
   });
 
-  console.log(metrics.at(0));
+  console.log(metrics);
   
 
 
@@ -99,15 +95,14 @@ const OnGoingJourney = () => {
               backgroundColor: "rgb(255 255 255 / 0.1)",
               border: "none",
               color: "var(--app-white)",
-            }}
-          >
+            }}  type={""}          >
             description
           </Button>
         </div>
         <div className={OngoingJourneyStyles.mission_stats}>
-          <CircularProgressBar total={metrics.at(0)?.totalDares} chunk={metrics.at(0)?.passedFreaks} label="completed" />
-          <CircularProgressBar total={metrics.at(0)?.totalDares} chunk={metrics.at(0)?.swapsMade} label="swaps" />
-          <CircularProgressBar total={metrics.at(0)?.totalDares} chunk={metrics.at(0)?.abortedFreaks} label="aborted" />
+          <CircularProgressBar total={metrics.at(0)?.totalDares!} chunk={metrics.at(0)?.passedFreaks!} label="completed" bgColor={""} arcColor={""} />
+          <CircularProgressBar total={metrics.at(0)?.totalDares!} chunk={metrics.at(0)?.swapsMade!} label="swaps" bgColor={""} arcColor={""} />
+          <CircularProgressBar total={metrics.at(0)?.totalDares!} chunk={metrics.at(0)?.abortedFreaks!} label="aborted" bgColor={""} arcColor={""} />
         </div>
       </div>
       <div className={OngoingJourneyStyles.timer_action_buttons}>
@@ -125,8 +120,7 @@ const OnGoingJourney = () => {
               display: "flex",
               alignItems: "center",
               gap: "0.8rem",
-            }}
-          >
+            }}  type={""}          >
             <CorrectIcon /> <p>done</p>
           </Button>
           <Button
@@ -138,8 +132,7 @@ const OnGoingJourney = () => {
               display: "flex",
               alignItems: "center",
               gap: "0.8rem",
-            }}
-          >
+            }}  type={""}          >
             <SwapIcon /> <p>swap</p>
           </Button>
           <Button
@@ -151,8 +144,7 @@ const OnGoingJourney = () => {
               display: "flex",
               alignItems: "center",
               gap: "0.8rem",
-            }}
-          >
+            }}  type={""}          >
             <AbortIcon /> <p>abort</p>
           </Button>
         </div>
@@ -166,7 +158,7 @@ const OnGoingJourney = () => {
           </small>
         </article>
         <br />
-        <Button style={{ padding: "0.5rem" }}>read</Button>
+        <Button style={{ padding: "0.5rem" }}  type={""}>read</Button>
       </div>
     </div>
   );

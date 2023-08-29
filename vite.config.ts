@@ -7,9 +7,8 @@ export default defineConfig({
   plugins: [react()],
   resolve: {
     alias: {
-      "@assets": path.resolve(__dirname, "./src/assets"),
-      "@appwrite": path.resolve(__dirname, "./src/appwrite"),
       "@components": path.resolve(__dirname, "./src/components"),
+      "@assets": path.resolve(__dirname, "./src/assets"),
       "@contexts": path.resolve(__dirname, "./src/contexts"),
       "@css": path.resolve(__dirname, "./src/css"),
       "@hooks": path.resolve(__dirname, "./src/hooks"),

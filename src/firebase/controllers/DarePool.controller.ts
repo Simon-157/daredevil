@@ -47,30 +47,6 @@ export const darepoolController = () => {
     return darepool;
   };
 
-  // const getAllDares = async (lastDocumentId = null): Promise<Darepool> => {
-  //   try {
-  //     var darepoolQuery = query(darepoolCollection);
-
-  //     if (lastDocumentId) {
-  //       // Construct query for next page using lastDocumentId
-  //       const lastDocument = doc(darepoolCollection, lastDocumentId);
-  //       darepoolQuery = query(darepoolCollection, startAfter(lastDocument));
-  //     }
-
-  //     const darepoolSnapshot = await getDocs(darepoolQuery);
-  //     const darepool: Darepool = [];
-  //     darepoolSnapshot.forEach((doc) => {
-  //       const dareData = doc.data() as Dare;
-  //       darepool.push(dareData);
-  //     });
-
-  //     return darepool;
-  //   } catch (error) {
-  //     console.error("Error getting darepool:", error);
-  //     return [];
-  //   }
-  // };
-
 
   // Get a specific dare by ID
   const getDareById = async (dareId: string): Promise<Dare | null> => {

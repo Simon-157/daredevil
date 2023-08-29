@@ -1,9 +1,9 @@
 import React from "react";
 import JourneysStyles from "./Journeys.module.css";
-import useAuth from "@hooks/useAuth";
 import { useNavigate } from "react-router-dom";
-import { Journey } from "@types/UserType";
-import CircularProgressBar from "@components/progress_bar/circular_progress_bar/CircularProgressBar";
+import CircularProgressBar from "../../../components/progress_bar/circular_progress_bar/CircularProgressBar";
+import { Journey } from "../../../types/UserType";
+import useAuth from "../../../hooks/useAuth";
 
 type JourneysProps = {};
 
@@ -30,8 +30,7 @@ const Journeys: React.FC<JourneysProps> = () => {
               <CircularProgressBar
                 chunk={completedJourneys.length}
                 total={auth.journeys.documents.length}
-                label="Completed"
-              />
+                label="Completed" bgColor={""} arcColor={""}              />
             </div>
           </div>
         </div>
@@ -41,8 +40,7 @@ const Journeys: React.FC<JourneysProps> = () => {
               <CircularProgressBar
                 chunk={abandonedJourneys.length}
                 total={auth.journeys.documents.length}
-                label="Abandoned"
-              />
+                label="Abandoned" bgColor={""} arcColor={""}              />
             </div>
           </div>
         </div>

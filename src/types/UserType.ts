@@ -11,8 +11,8 @@ export type AuthObject = {
 
 export interface User {
   id: string;
-  name: string;
-  email: string;
+  name: string | null;
+  email?: string | null;
   joined_at?: firebase.firestore.Timestamp;
   journeys?: Journey[];
 }
@@ -32,7 +32,7 @@ export  interface Journey {
 
 
 export interface JourneyMetricsType  {
-  numDares:number | 0;
+  totalDares:number | 0;
   name: string;
   journeyId: string;
   swapsMade: number;

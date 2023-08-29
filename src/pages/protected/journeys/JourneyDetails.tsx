@@ -1,28 +1,16 @@
 import React from "react";
-import { useLocation } from "react-router-dom";
-import { Journey, Journeydare } from "@types/UserType";
 import JourneysStyles from "./Journeys.module.css";
-import { StarIcon } from "@assets/icons/Icons";
 
 type JourneyDetailsProps = {};
 
 const JourneyDetails: React.FC<JourneyDetailsProps> = () => {
-  const location = useLocation();
-  const journey = location.state?.journey as Journey;
-
-  const passedDares = journey?.dares.filter(
-    (dare:any) => dare.milestone! === "passed"
-  ).length;
-  const abortedDares = journey?.dares.filter(
-    (dare:any) => dare.milestone! === "passed"
-  ).length;
 
   return (
     <div
       style={{ color: "white" }}
       className={JourneysStyles.journey_details_wrapper}
     >
-      <div className={JourneysStyles.journey_details_metadata}>
+      {/* <div className={JourneysStyles.journey_details_metadata}>
         <h1>{journey?.name}</h1>
         <br />
         <div style={{ columns: 2 }}>
@@ -79,10 +67,10 @@ const JourneyDetails: React.FC<JourneyDetailsProps> = () => {
                       <StarIcon />
                     </p>
                   ))}
-            </section>
-          </div>
-        ))}
-      </div>
+            </section> */}
+          {/* </div>
+        ))} */}
+      {/* </div> */}
     </div>
   );
 };

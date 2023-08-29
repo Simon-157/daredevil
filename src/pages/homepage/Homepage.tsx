@@ -3,7 +3,7 @@ import { useFirebaseAuth } from "../../firebase/auth/auth";
 
 const Homepage = () => {
   // const { auth } = useAuth();
-  const {signInWithGoogle, user} = useFirebaseAuth()
+  const {signInWithGoogle} = useFirebaseAuth()
 
   
   return (
