@@ -1,5 +1,5 @@
 import firebase from "firebase/compat/app";
-import { Dare, Darepool, JourneyDare } from "./FreakPoolType";
+import {  Darepool, JourneyDare } from "./FreakPoolType";
 
 
 export type AuthObject = {

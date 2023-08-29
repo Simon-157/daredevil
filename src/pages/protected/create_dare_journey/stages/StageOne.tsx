@@ -3,12 +3,13 @@ import { useNavigate } from "react-router-dom";
 
 import StageStyles from "./Stage.module.css";
 import Cover from "@assets/images/man-smiling-and-holding-smartphone.png";
-import Button from "@components/button/Button";
-import Input from "@components/input/Input";
 import GoBack from "./GoBack";
+import Input from '../../../../components/input/Input';
+import Button from '../../../../components/button/Button';
 
 interface StageOneProps {
   handleSubmit: (data: any) => void;
+  handleGoBack: () => void;
 }
 
 const StageOne: React.FC<StageOneProps> = ({ handleSubmit }) => {
@@ -42,7 +43,7 @@ const StageOne: React.FC<StageOneProps> = ({ handleSubmit }) => {
           onChange={(e:any) => setName(e.target.value)}
         />
         <br />
-        <Button onClick={handleStageOneSubmit} style={{ width: "13rem" }}>
+        <Button onClick={handleStageOneSubmit} style={{ width: "13rem" }}  type={''}>
           next
         </Button>
       </div>

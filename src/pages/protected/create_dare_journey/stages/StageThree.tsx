@@ -1,17 +1,18 @@
 import { useState } from "react";
 
 // Component
-import ProgressBar from '@components/progress_bar/ProgressBar';
-import ChallengeBox from '@components/challenge_box/ChallengeBox';
 import GoBack from "./GoBack";
-import Button from "@components/button/Button";
 
 
 //Styles
 import StageStyles from "./Stage.module.css";
+import ProgressBar from "../../../../components/progress_bar/ProgressBar";
+import Button from "../../../../components/button/Button";
+import ChallengeBox from "../../../../components/challenge_box/ChallengeBox";
 
 interface StageThreeProps {
-    handleSubmit: () => void;
+    // handleSubmit: () => void;
+    handleSubmit: (data: any) => void;
     handleGoBack: () => void;
 }
 
@@ -36,7 +37,7 @@ const StageThree: React.FC<StageThreeProps> = ({ handleSubmit, handleGoBack }) =
                     </div>
                 </div>
                 <div className={StageStyles.wrapper__roundButton}>
-                    <Button onClick={handleSubmit} children={<a title='finish'>Finish</a>} />
+                    <Button onClick={handleSubmit} children={<a title='finish'>Finish</a>} type={""} />
                 </div>
             </div>
         </>

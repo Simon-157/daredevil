@@ -2,13 +2,14 @@ import React, { ChangeEvent, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 //components
-import Input from '@components/input/Input';
-import Button from '@components/button/Button';
+
 
 // Styles
 import ChallengeStyles from './Custom.module.css';
-import { titleInputStyle, descriptionInputStyle, buttonStyle } from '@utils/constants';
 import GoBack from '../create_dare_journey/stages/GoBack';
+import Button from '../../../components/button/Button';
+import Input from '../../../components/input/Input';
+import { titleInputStyle, descriptionInputStyle, buttonStyle } from '../../../utils/constants';
 
 
 const CustomChallenge: React.FC = () => {

@@ -1,7 +1,7 @@
 import { firebaseApp } from "../config/firebase";
 import { getFirestore, collection, doc, addDoc, arrayRemove, arrayUnion, getDoc, updateDoc, getDocs, query, where } from "firebase/firestore";
 
-import { Journey, User } from "../../types/UserType";
+import { Journey } from "../../types/UserType";
 
 const db = getFirestore(firebaseApp);
 

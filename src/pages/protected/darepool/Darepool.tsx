@@ -15,7 +15,7 @@ const Darepool = () => {
     isFetchingNextPage,
     status,
   } = useInfiniteQuery(["dares"], getAllDares, {
-    getNextPageParam: (lastPage, pages) => {
+    getNextPageParam: (lastPage) => {
       const lastDocumentId = lastPage[lastPage.length - 1]?.id;
   
       if (!lastDocumentId) {

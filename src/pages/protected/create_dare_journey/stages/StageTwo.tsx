@@ -1,10 +1,10 @@
 import React, { useState, ChangeEvent } from 'react';
 import StageStyles from "./Stage.module.css";
 import Cover from "@assets/images/man-smiling-and-holding-smartphone.png";
-import Input from "@components/input/Input";
-import Button from "@components/button/Button";
 import GoBack from "./GoBack";
 import { Timestamp } from 'firebase/firestore';
+import Button from '../../../../components/button/Button';
+import Input from '../../../../components/input/Input';
 
 interface RadioOption {
   label: string;
@@ -81,7 +81,7 @@ const StageTwo: React.FC<StageTwoProps> = ({ handleSubmit, handleGoBack }) => {
           ))}
         </div>
         <br />
-        <Button onClick={handleStageTwoSubmit}>Next</Button>
+        <Button onClick={handleStageTwoSubmit}  type={''}>Next</Button>
       </div>
 
       <div className={StageStyles.imageColumn}>

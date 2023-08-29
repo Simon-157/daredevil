@@ -1,12 +1,5 @@
-import {
-  HomeIcon,
-  TasksIcon,
-  BoltIcon,
-  ProfileIcon,
-  GearIcon,
-  LogoutIcon,
-  MoreIcon,
-} from "@assets/icons/Icons";
+import { HomeIcon, TasksIcon, BoltIcon, ProfileIcon, MoreIcon, GearIcon, LogoutIcon } from "../../assets/icons/Icons";
+
 
 export const PAGES = [
   {

@@ -14,9 +14,9 @@ export const descriptionInputStyle = {
     width: '40rem',
     height: '10rem',
     margin:'1rem',
-    input: {
-      height: '10rem',
-    },
+    // input: {
+    //   height: '10rem',
+    // },
   };
 
 export const buttonStyle = {

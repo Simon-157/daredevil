@@ -1,29 +1,25 @@
 import React from "react";
 import JourneysStyles from "./Journeys.module.css";
-import { useNavigate } from "react-router-dom";
-import CircularProgressBar from "../../../components/progress_bar/circular_progress_bar/CircularProgressBar";
-import { Journey } from "../../../types/UserType";
-import useAuth from "../../../hooks/useAuth";
 
 type JourneysProps = {};
 
 const Journeys: React.FC<JourneysProps> = () => {
-  const { auth } = useAuth();
-  const navigate = useNavigate();
-  const completedJourneys = auth.journeys.documents.filter(
-    (journey: Journey) => journey.milestone === "completed"
-  );
-  const abandonedJourneys = auth.journeys.documents.filter(
-    (journey: Journey) => journey.milestone === "abandoned"
-  );
+  // const { auth } = useAuth();
+  // const navigate = useNavigate();
+  // const completedJourneys = auth.journeys.documents.filter(
+  //   (journey: Journey) => journey.milestone === "completed"
+  // );
+  // const abandonedJourneys = auth.journeys.documents.filter(
+  //   (journey: Journey) => journey.milestone === "abandoned"
+  // );
 
-  const handleJourneyClick = (journey: Journey) => {
-    navigate(`/dashboard/journeys/${journey.id}`, { state: { journey } });
-  };
+  // const handleJourneyClick = (journey: Journey) => {
+  //   navigate(`/dashboard/journeys/${journey.id}`, { state: { journey } });
+  // };
 
   return (
     <div className={JourneysStyles.container}>
-      <div className={JourneysStyles.stats}>
+      {/* <div className={JourneysStyles.stats}>
         <div className={JourneysStyles.completed}>
           <div className={JourneysStyles.metric}>
             <div className={JourneysStyles.metricValue}>
@@ -74,7 +70,7 @@ const Journeys: React.FC<JourneysProps> = () => {
             </small>
           </div>
         ))}
-      </div>
+      </div> */}
     </div>
   );
 };

@@ -3,13 +3,13 @@ import { NavLink } from "react-router-dom";
 import { MouseEvent, useState } from "react";
 
 //components
-import { Logo } from "@assets/icons/Icons";
 
 // styles
 import NavbarStyles from "./Navbar.module.css";
 
 //utils
 import { PAGES, EXTRA_MENU } from "./pages";
+import { Logo } from "../../assets/icons/Icons";
 const Navbar = () => {
   const [toggleClass, setToggleClass] = useState("extra__menu");
   const [currentPageName, setCurrentPage] = useState("home");
