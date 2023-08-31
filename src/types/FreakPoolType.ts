@@ -2,13 +2,13 @@ import firebase from "firebase/compat/app";
 
 export type Darepool = Dare[];
 
-export interface JourneyDare {
+export type JourneyDare = {
   id: string;
   dare_id: string;
   milestone: string;
 }
 
-export interface Dare {
+export type Dare = {
   id: string;
   short_name: string;
   description: string;

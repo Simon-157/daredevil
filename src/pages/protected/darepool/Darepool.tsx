@@ -3,6 +3,7 @@ import DarepoolStyles from "./Darepool.module.css";
 import Button from "../../../components/button/Button";
 import { Dare } from "../../../types/FreakPoolType";
 import { darepoolController } from "../../../firebase/controllers/DarePool.controller";
+import CustomLoader from "../../../components/loader/loader";
 
 const Darepool = () => {
   const {getAllDares} = darepoolController();
@@ -29,7 +30,7 @@ const Darepool = () => {
   
 
   if (status === "loading") {
-    return <p>Loading...</p>;
+    return <CustomLoader />;
   }
 
   if (status === "error") {

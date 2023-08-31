@@ -1,17 +1,15 @@
 import React, { useState } from "react";
-
 import StageOne from "./stages/StageOne";
 import StageThree from "./stages/StageThree";
 import StageTwo from "./stages/StageTwo";
 import StageFour from "./stages/StageFour";
-
-
 import CreateDareJourneyStyles from "./CreateDareJourney.module.css";
 import { journeyController } from "../../../firebase/controllers/Journeys.controller";
 import { Journey } from "../../../types/UserType";
 import { Timestamp } from "firebase/firestore";
 import { useFirebaseAuth } from "../../../firebase/auth/auth";
 import StageCircle from "../../../components/stage_circle/StageCircle";
+// import {Dare, JourneyDare } from "../../../types/FreakPoolType";
 
 const CreateDareJourney: React.FC = () => {
   
@@ -30,8 +28,7 @@ const CreateDareJourney: React.FC = () => {
      
       const journey:Journey= {
         name: formData[1].name,
-         // @ts-ignore
-        journey_dares: ['Make money for fun', 'Drive to the Make it', 'Dive into it'],
+        journey_dares: formData[3] ,
         end_date: formData[2].endDate,
         milestone: "ongoing",
         start_date: formData[2].startDate,
