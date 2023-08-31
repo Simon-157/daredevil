@@ -1,16 +1,18 @@
-import { Dispatch, SetStateAction, useContext } from "react";
+import { useContext } from "react";
 import AuthContext from "../contexts/AuthContext";
 import { AuthObject } from "../types/UserType";
 
-
 interface AuthContextProps {
   auth?: AuthObject;
-  setAuth: Dispatch<SetStateAction<AuthObject | undefined>>;
+  setAuth: (auth?: AuthObject) => void; // Update the type
 }
 
-
-const useAuth = ():AuthContextProps => {
-  return useContext(AuthContext)!;
+const useAuth = (): AuthContextProps => {
+  const context = useContext(AuthContext);
+  if (!context) {
+    throw new Error("useAuth must be used within an AuthProvider");
+  }
+  return context;
 };
 
 export default useAuth;

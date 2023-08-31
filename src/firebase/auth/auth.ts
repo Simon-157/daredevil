@@ -1,9 +1,11 @@
 import { useEffect, useState } from 'react';
 import {GoogleAuthProvider, signInWithPopup, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, User } from 'firebase/auth'
 import { auth } from '../config/firebase';
+import useAuth from '../../hooks/useAuth';
 
 export const useFirebaseAuth = () => {
   const [user, setUser] = useState<User | null>(null);
+  const {auth: authObject, setAuth} =  useAuth()
   const [loading, setLoading] = useState(true);
 
   const signInWithGoogle = async () => {
@@ -11,7 +13,14 @@ export const useFirebaseAuth = () => {
     try {
       const { user: firebaseUser } = await signInWithPopup(auth, provider);
       setUser(firebaseUser);
-      return firebaseUser;
+      setAuth({
+        user: {
+          id: firebaseUser!.uid,
+          name: firebaseUser!.displayName,
+          email: firebaseUser!.email,
+        },
+      });
+      return authObject;
     } catch (error) {
       console.error('Error signing in with Google:', error);
     }
@@ -41,6 +50,7 @@ export const useFirebaseAuth = () => {
   const signOut = async () => {
     try {
       await auth.signOut();
+      setAuth(undefined);
       setUser(null);
     } catch (error) {
       console.error('Error signing out:', error);

@@ -10,31 +10,22 @@ import useAuth from "../../../hooks/useAuth";
 
 const Login: React.FC = () => {
   const navigate = useNavigate();
-  const { setAuth, auth: authUser } = useAuth(); // Assuming you get user data from useAuth hook
-  const { signInWithGoogle, user: firebaseUser } = useFirebaseAuth(); // Assuming you get user data from useFirebaseAuth hook
+  const { auth: authUser } = useAuth(); // Assuming you get user data from useAuth hook
+  const { signInWithGoogle } = useFirebaseAuth(); // Assuming you get user data from useFirebaseAuth hook
 
   useEffect(() => {
-    if (authUser || firebaseUser) {
+    // Check if there's an authenticated user
+    if (authUser) {
       navigate("/dashboard/home");
     }
-  }, [authUser, firebaseUser]);
+  }, []);
 
   const handleSubmit = async () => {
     try {
       await signInWithGoogle();
-      if (firebaseUser) {
-        setAuth({
-          user: {
-            id: firebaseUser.uid,
-            name: firebaseUser.displayName,
-            email: firebaseUser.email,
-          },
-        });
-        console.log(firebaseUser.uid);
-        navigate("/dashboard/home");
-      }
+       navigate("/dashboard/home");
     } catch (error) {
-      // Handle error
+      console.log(error);
     }
   };
 

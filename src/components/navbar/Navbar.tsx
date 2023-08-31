@@ -10,7 +10,9 @@ import NavbarStyles from "./Navbar.module.css";
 //utils
 import { PAGES, EXTRA_MENU } from "./pages";
 import { Logo } from "../../assets/icons/Icons";
+import { useFirebaseAuth } from "../../firebase/auth/auth";
 const Navbar = () => {
+  const { signOut: logout } = useFirebaseAuth()
   const [toggleClass, setToggleClass] = useState("extra__menu");
   const [currentPageName, setCurrentPage] = useState("home");
   const toggleExtraMenu = () => {
@@ -29,11 +31,10 @@ const Navbar = () => {
             key={index}
             className={
               NavbarStyles[
-                `${
-                  page.name === currentPageName
-                    ? "navbar__menu__item__active"
-                    : "navbar__menu__item"
-                }`
+              `${page.name === currentPageName
+                ? "navbar__menu__item__active"
+                : "navbar__menu__item"
+              }`
               ]
             }
             onClick={() => setCurrentPage(page.name)}
@@ -71,24 +72,38 @@ const Navbar = () => {
           <div
             className={
               NavbarStyles[
-                `${
-                  page.name === currentPageName
-                    ? "navbar__menu__item__active"
-                    : "navbar__menu__item"
-                }`
+              `${page.name === currentPageName
+                ? "navbar__menu__item__active"
+                : "navbar__menu__item"
+              }`
               ]
             }
             onClick={() => setCurrentPage(page.name)}
             key={index}
           >
-            <NavLink to={page.path}>
-              <div className={NavbarStyles.navbar__menu__item__icon}>
-                {page.icon}
+            {index === EXTRA_MENU.length - 1 ? (
+
+              <div onClick={logout}>
+                <NavLink to="#">
+                  <div className={NavbarStyles.navbar__menu__item__icon} >
+                    {page.icon}
+                  </div>
+                  <small className={NavbarStyles.navbar__menu__item__text}>
+                    {page.name}
+                  </small>
+                </NavLink>
               </div>
-              <small className={NavbarStyles.navbar__menu__item__text}>
-                {page.name}
-              </small>
-            </NavLink>
+
+            ) : (
+              <NavLink to={page.path}>
+                <div className={NavbarStyles.navbar__menu__item__icon}>
+                  {page.icon}
+                </div>
+                <small className={NavbarStyles.navbar__menu__item__text}>
+                  {page.name}
+                </small>
+              </NavLink>
+            )}
           </div>
         ))}
       </div>
