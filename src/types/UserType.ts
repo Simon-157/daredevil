@@ -41,4 +41,5 @@ export interface JourneyMetricsType  {
   abortedFreaks: number;
   missedFreaks: number;
   timeLeftFormatted: string;
+  currentMission: JourneyDare[]
 };

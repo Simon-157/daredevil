@@ -15,7 +15,6 @@ import { Dare, JourneyDare } from "../../../../types/FreakPoolType";
 import { useSnackbar } from "../../../../hooks/useSnackbar";
 
 interface StageThreeProps {
-    // handleSubmit: () => void;
     handleSubmit: (data: any) => void;
     handleGoBack: () => void;
 }

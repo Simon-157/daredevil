@@ -29,9 +29,7 @@ const OnGoingJourney = () => {
     const journeys = await getJourneysByUser(auth!.user.id);
     const currentDate = new Date().toISOString().split("T")[0];
     const filteredJourneys = journeys.filter((journey: Journey) => {
-      const journeyStartDate = journey.start_date.toDate();
-      const journeyStartDateString = journeyStartDate.toISOString().split("T")[0];
-      return journeyStartDateString === currentDate;
+      return currentDate <= journey.end_date.toDate().toISOString().split("T")[0];
     });
     return filteredJourneys;
   };
@@ -46,6 +44,7 @@ const OnGoingJourney = () => {
     const passed: number = journey.journey_dares.filter((dare: JourneyDare) => dare.milestone === "passed").length;
     const aborted: number = journey.journey_dares.filter((dare: JourneyDare) => dare.milestone === "aborted").length;
     const missed: number = journey.journey_dares.filter((dare: JourneyDare) => dare.milestone === "missed").length;
+    const currentMission: JourneyDare[] = journey.journey_dares.filter((dare: JourneyDare) => dare.milestone === "ongoing");
 
     const startDate = journey.start_date.toDate();
     const endDate = journey.end_date.toDate();
@@ -68,6 +67,7 @@ const OnGoingJourney = () => {
       abortedFreaks: aborted,
       missedFreaks: missed,
       timeLeftFormatted: timeLeftFormatted,
+      currentMission:currentMission
     };
   });
 
@@ -82,27 +82,26 @@ const OnGoingJourney = () => {
         <h1>Today's Mission</h1>
       </div>
       <div className={OngoingJourneyStyles.mission_display}>
-        <h2>Ask your crush out</h2>
-        <div className={OngoingJourneyStyles.stats}>
+        <h2>{metrics.at(0)?.name!} Journey</h2>
+        {/* <div className={OngoingJourneyStyles.stats}>
           statistics
-          {/* TODO : Map the metric for the statistics here with style*/}
 
-        </div>
+        </div> */}
         <div className={OngoingJourneyStyles.mission_content}>
-          <h1>Ask your crush out</h1>
+          <h1>"{metrics.at(0)?.currentMission[0].short_name}"</h1>
           <Button
             style={{
               backgroundColor: "rgb(255 255 255 / 0.1)",
               border: "none",
               color: "var(--app-white)",
             }}  type={""}          >
-            description
+            {metrics.at(0)?.currentMission[0].description}
           </Button>
         </div>
         <div className={OngoingJourneyStyles.mission_stats}>
-          <CircularProgressBar total={metrics.at(0)?.totalDares!} chunk={metrics.at(0)?.passedFreaks!} label="completed" bgColor={""} arcColor={""} />
-          <CircularProgressBar total={metrics.at(0)?.totalDares!} chunk={metrics.at(0)?.swapsMade!} label="swaps" bgColor={""} arcColor={""} />
-          <CircularProgressBar total={metrics.at(0)?.totalDares!} chunk={metrics.at(0)?.abortedFreaks!} label="aborted" bgColor={""} arcColor={""} />
+          <CircularProgressBar total={metrics.at(0)?.totalDares!} chunk={metrics.at(0)?.passedFreaks!} label="passed" bgColor={"white"} arcColor={"var(--app-green)"} />
+          <CircularProgressBar total={metrics.at(0)?.totalDares!} chunk={metrics.at(0)?.swapsMade!} label="swaps" bgColor={"white"} arcColor={"var(--app-blue)"} />
+          <CircularProgressBar total={metrics.at(0)?.totalDares!} chunk={metrics.at(0)?.abortedFreaks!} label="aborted" bgColor={"white"} arcColor={"--app-orange"} />
         </div>
       </div>
       <div className={OngoingJourneyStyles.timer_action_buttons}>

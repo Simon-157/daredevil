@@ -7,6 +7,7 @@ export type JourneyDare = {
   dare_id: string;
   milestone: string;
   short_name:string
+  description:string
 }
 
 export type Dare = {
