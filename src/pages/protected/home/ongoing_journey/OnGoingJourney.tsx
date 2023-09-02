@@ -9,10 +9,12 @@ import { CorrectIcon, SwapIcon, AbortIcon, BulbIcon } from "../../../../assets/i
 import Button from "../../../../components/button/Button";
 import CircularProgressBar from "../../../../components/progress_bar/circular_progress_bar/CircularProgressBar";
 import useAuth from "../../../../hooks/useAuth";
+import { useSnackbar } from "../../../../hooks/useSnackbar";
 
 
 const OnGoingJourney = () => {
-  const { getJourneysByUser } = journeyController();
+  const { showSnackbar, snackbar } = useSnackbar();
+  const { getJourneysByUser, markDareDone } = journeyController();
   const { auth } = useAuth();
   const [currentJourneys, setCurrentJourneys] = useState<Journey[]>([]); // Specify the type here
 
@@ -73,7 +75,10 @@ const OnGoingJourney = () => {
   });
 
   const [timeLeft, setTimeLeft] = useState(metrics.at(0)?.timeLeftFormatted);
-
+  const handleDoneClick = async () =>{
+    const res = await markDareDone(metrics.at(0)?.journeyId!, metrics.at(0)?.currentMission[0].id!);
+    res ? showSnackbar("Dare marked passed", "success") : showSnackbar("Couldn't mark done", "error")
+  }
   useEffect(() => {
     const intervalId = setInterval(() => {
       const startDate = currentJourneys[0]?.start_date.toDate();
@@ -97,8 +102,6 @@ const OnGoingJourney = () => {
 
     return () => clearInterval(intervalId); // Cleanup the interval on unmount
   }, [currentJourneys]);
-
-  
 
 
   return (
@@ -126,7 +129,7 @@ const OnGoingJourney = () => {
         </div>
         <div className={OngoingJourneyStyles.mission_stats}>
           <CircularProgressBar total={metrics.at(0)?.totalDares!} chunk={metrics.at(0)?.passedFreaks!} label="passed" bgColor={"white"} arcColor={"var(--app-green)"} />
-          <CircularProgressBar total={metrics.at(0)?.totalDares!} chunk={metrics.at(0)?.swapsMade!} label="swaps" bgColor={"white"} arcColor={"var(--app-blue)"} />
+          <CircularProgressBar total={metrics.at(0)?.totalDares!} chunk={metrics.at(0)?.swapsMade!} label="swaps" bgColor={"white"} arcColor={"var(--app-yellow)"} />
           <CircularProgressBar total={metrics.at(0)?.totalDares!} chunk={metrics.at(0)?.abortedFreaks!} label="aborted" bgColor={"white"} arcColor={"--app-orange"} />
         </div>
       </div>
@@ -137,7 +140,9 @@ const OnGoingJourney = () => {
         <h3> Time remaining</h3>
         <h1>{timeLeft}</h1>
         <div className={OngoingJourneyStyles.action_buttons}>
+          {snackbar}
           <Button
+          onClick={async () => {await handleDoneClick()}}
             style={{
               backgroundColor: "rgba(191,249,231,0.1)",
               minWidth: "2rem",

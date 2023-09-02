@@ -22,7 +22,6 @@ export const journeyController = () => {
         }
     };
 
-
     // Get all journeys created by a particular user
     const getJourneysByUser = async (userId: string): Promise<Journey[]> => {
         try {
@@ -31,6 +30,7 @@ export const journeyController = () => {
             const userJourneys: Journey[] = [];
             userJourneysSnapshot.forEach((doc) => {
                 const journeyData = doc.data() as Journey;
+                journeyData.id = doc.id;
                 userJourneys.push(journeyData);
             });
 
@@ -69,12 +69,56 @@ export const journeyController = () => {
     ): Promise<void> => {
         const journeyFreakRef = doc(
             journeyCollection,
-            `${journeyId}/journey_freaks/${journeyFreakId}`
+            `${journeyId}/journey_dares/${journeyFreakId}`
         );
         await updateDoc(journeyFreakRef, {
             milestone: "aborted",
         });
     };
+
+
+
+    // Method to mark a dare as done by a user
+    const markDareDone = async (
+        journeyId: string,
+        journeyDareId: string
+    ): Promise<Boolean> => {
+        if (!journeyId || !journeyDareId) {
+            console.error("Invalid journeyId or journeyDareId");
+            return false;
+        }
+        const journeyRef = doc(journeyCollection, journeyId);
+        try {
+            // Get the current journey document data
+            const journeyDoc = await getDoc(journeyRef);
+            if (!journeyDoc.exists()) {
+                console.error("Journey document not found");
+                return false; 
+            }
+            const journeyData = journeyDoc.data() as Journey;
+            const indexToUpdate = journeyData.journey_dares.findIndex(
+                (dare) => dare.dare_id === journeyDareId
+            );
+            if (indexToUpdate === -1) {
+                console.error("Journey Dare not found in the array");
+                return false;
+            }
+            // Update the milestone of the specific object in the array
+            journeyData.journey_dares[indexToUpdate].milestone = "passed";
+            // Update the journey document with the modified array
+            await updateDoc(journeyRef, {
+                journey_dares: journeyData.journey_dares,
+            });
+
+            console.log("Dare marked as done successfully");
+            return true;
+        } catch (error) {
+            console.error('Error marking dare as done:', error);
+            return false;
+        }
+    };
+
+
 
     // Method to swap a journey and update milestones
     const swapJourney = async (
@@ -127,5 +171,6 @@ export const journeyController = () => {
         updateJourneyMilestone,
         swapJourney,
         abortFreak,
+        markDareDone
     };
 };

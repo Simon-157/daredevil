@@ -14,7 +14,7 @@ const Protected = () => {
   const { isLoading } = useQuery("fetchData", fetchData);
 
   if (isLoading) {
-    return <div><CustomLoader size={60} /></div>;
+    return <div><CustomLoader size="60" /></div>;
   }
 
   return auth?.user.id ? (

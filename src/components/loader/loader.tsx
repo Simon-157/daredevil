@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import LoaderStyles from './loader.module.css'
 
 interface LoaderProps {
-    size:number,
+    size:string,
     color:string
 
 }
