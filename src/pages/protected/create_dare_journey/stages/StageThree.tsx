@@ -37,6 +37,8 @@ const StageThree: React.FC<StageThreeProps> = ({
         showSnackbar("dare added successfully", "success")
     }
 
+    if(isError) {showSnackbar("Error loading data", "error");}
+
     return (
         <>
             <div className={StageStyles.challenge__container}>
