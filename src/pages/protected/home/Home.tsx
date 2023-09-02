@@ -10,7 +10,7 @@ const Home = () => {
   const { isLoading } = useQuery("fetchData", fetchData);
 
   if (isLoading) {
-    return <div><CustomLoader size={60} /></div>;
+    return <div><CustomLoader size="60" /></div>;
   }
   const hasOngoing = useJourneyStatus();
   const ongoingJourneyComponent = <OnGoingJourney />;
