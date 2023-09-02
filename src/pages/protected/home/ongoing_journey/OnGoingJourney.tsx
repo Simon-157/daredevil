@@ -9,8 +9,9 @@ import { CorrectIcon, SwapIcon, AbortIcon, BulbIcon } from "../../../../assets/i
 import Button from "../../../../components/button/Button";
 import CircularProgressBar from "../../../../components/progress_bar/circular_progress_bar/CircularProgressBar";
 import useAuth from "../../../../hooks/useAuth";
-const OnGoingJourney = () => {
 
+
+const OnGoingJourney = () => {
   const { getJourneysByUser } = journeyController();
   const { auth } = useAuth();
   const [currentJourneys, setCurrentJourneys] = useState<Journey[]>([]); // Specify the type here
@@ -48,11 +49,11 @@ const OnGoingJourney = () => {
 
     const startDate = journey.start_date.toDate();
     const endDate = journey.end_date.toDate();
-    const timeLeft = endDate.getTime() - startDate.getTime();
+    const time = endDate.getTime() - startDate.getTime();
 
-    const hours = Math.floor(timeLeft / (1000 * 60 * 60));
-    const minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
-    const seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
+    const hours = Math.floor(time / (1000 * 60 * 60));
+    const minutes = Math.floor((time % (1000 * 60 * 60)) / (1000 * 60));
+    const seconds = Math.floor((time % (1000 * 60)) / 1000);
 
     // const timeLeftFormatted = `${hours}:${minutes}:${seconds}`;
     const timeLeftFormatted = `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
@@ -71,7 +72,32 @@ const OnGoingJourney = () => {
     };
   });
 
-  console.log(metrics);
+  const [timeLeft, setTimeLeft] = useState(metrics.at(0)?.timeLeftFormatted);
+
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      const startDate = currentJourneys[0]?.start_date.toDate();
+      const endDate = currentJourneys[0]?.end_date.toDate();
+      const currentTime = new Date();
+      
+      if (startDate && endDate && currentTime < endDate) {
+        const timeLeftMillis = endDate.getTime() - currentTime.getTime();
+        const hours = Math.floor(timeLeftMillis / (1000 * 60 * 60));
+        const minutes = Math.floor((timeLeftMillis % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((timeLeftMillis % (1000 * 60)) / 1000);
+        
+        const timeLeftFormatted = `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+        setTimeLeft(timeLeftFormatted);
+      } else {
+        // Journey has ended, clear the interval
+        clearInterval(intervalId);
+        setTimeLeft("00:00:00");
+      }
+    }, 1000); // Update time every second
+
+    return () => clearInterval(intervalId); // Cleanup the interval on unmount
+  }, [currentJourneys]);
+
   
 
 
@@ -108,7 +134,8 @@ const OnGoingJourney = () => {
         <img src={darkClock} alt={darkClock} />
 
         {/* TODO : replace with timeLeftFormatted */}
-        <h1> {metrics.at(0)?.timeLeftFormatted}</h1>
+        <h3> Time remaining</h3>
+        <h1>{timeLeft}</h1>
         <div className={OngoingJourneyStyles.action_buttons}>
           <Button
             style={{
