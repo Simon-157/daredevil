@@ -12,6 +12,7 @@ import { darepoolController } from "../../../../firebase/controllers/DarePool.co
 import { useQuery } from "react-query";
 import CustomLoader from "../../../../components/loader/loader";
 import { Dare, JourneyDare } from "../../../../types/FreakPoolType";
+import { useSnackbar } from "../../../../hooks/useSnackbar";
 
 interface StageThreeProps {
     // handleSubmit: () => void;
@@ -24,16 +25,16 @@ const StageThree: React.FC<StageThreeProps> = ({
     handleGoBack,
 }) => {
     const [progressVal] = useState<number>(50);
-    const { getAllDares } = darepoolController();
     const [selectedDares, setSelectedDares] = useState<JourneyDare[]>([])
-    const { data: dares, isLoading, isError } = useQuery(["dares"], getAllDares);
-
-    const handleStageThreeSubmit = () => {
-        handleSubmit(selectedDares);
-    };
+    const { showSnackbar, snackbar } = useSnackbar();
+    const { getDares } = darepoolController();
+    const { data: dares, isLoading, isError } = useQuery(["dares"], getDares);
+    console.log(dares);
+ 
 
     const onSelect = (dare: JourneyDare) => {
         setSelectedDares([...selectedDares, dare])
+        showSnackbar("dare added successfully", "success")
     }
 
     return (
@@ -41,6 +42,7 @@ const StageThree: React.FC<StageThreeProps> = ({
             <div className={StageStyles.challenge__container}>
                 <GoBack handleGoBack={handleGoBack} />
                 <div className={StageStyles.main_wrapper}>
+                    {snackbar}
                     <span>
                         select up to X challenges to include in your freak journey{" "}
                     </span>
@@ -53,27 +55,28 @@ const StageThree: React.FC<StageThreeProps> = ({
                             <CustomLoader />
                         ) : (
                             <>
-                                {!isError ? (
+                                {!isError? (
                                     <>
-                                        <div>
+                                        <div className={StageStyles.dare__pool}>
                                             <span>Darepool</span>
                                             <div className={StageStyles.challenge__container__list}>
                                                 {dares?.slice(0, 50).map((dare: Dare, index) => {
                                                     return <ChallengeBox key={index}
-                                                        onClick={() => onSelect({ id: dare.id, dare_id: dare.id, milestone: "ongoing" } as JourneyDare)}>
+                                                        onClick={() => onSelect({ id: dare.id, dare_id: dare.id, milestone: "ongoing", short_name:dare.short_name } as JourneyDare)}>
                                                         {dare.short_name}
                                                     </ChallengeBox>;
                                                 })}
                                             </div>
                                         </div>
+                                        {selectedDares.length > 0 ?
                                         <div className={StageStyles.selected__challenges}>
-                                            <span>Selected Dares</span>
-                                            <div className={StageStyles.challenge__container__list}>
-                                                {dares?.slice(0, 50).map((dare: Dare) => {
+                                            <span>Selected Dares<p>{selectedDares.length}</p></span>
+                                             <div className={StageStyles.challenge__container__list}>
+                                                {selectedDares?.slice(0, 3).map((dare: JourneyDare) => {
                                                     return <ChallengeBox>{dare.short_name}</ChallengeBox>;
                                                 })}
-                                            </div>
-                                        </div>
+                                            </div> 
+                                        </div>: <span>No dare selected Yet, select at least 3 dares</span>}
                                     </>
                                 ) : (
                                     "No dares to show currently "
@@ -85,9 +88,9 @@ const StageThree: React.FC<StageThreeProps> = ({
             </div>
             <div className={StageStyles.wrapper__roundButton}>
                 <Button
-                    onClick={() => { handleStageThreeSubmit; handleSubmit }}
+                    onClick={()=>handleSubmit(selectedDares)}
                     children={<a title="finish">Finish</a>}
-                    type={""}
+                    type={"outlined"}
                 />
             </div>
         </>

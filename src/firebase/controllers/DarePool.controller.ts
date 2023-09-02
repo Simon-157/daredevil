@@ -22,14 +22,32 @@ const darepoolCollection = collection(db, "dares");
 export const darepoolController = () => {
   // Get all dares in the darepool
 
+  // Function to get all dares and add document references as IDs
+  const getDares = async () => {
+    try {
+      const dareCollectionRef = collection(darepoolCollection, "/"); 
+      const dareSnapshot = await getDocs(dareCollectionRef);
+
+      const dares: Darepool = [];
+
+      dareSnapshot.forEach((dareDoc) => {
+        if (dareDoc.exists()) {
+          const dareData = dareDoc.data() as Dare;
+          // Add the document reference as an "id" field to the data
+          dareData.id = dareDoc.id;
+          dares.push(dareData);
+        }
+      });
+      return dares;
+    } catch (error) {
+      console.error("Error getting dares:", error);
+      return [];
+    }
+  };
 
   // Update the signature of getAllDares function
   const getAllDares: QueryFunction<Darepool, ["dares"]> = async (context) => {
     const lastDocumentId = context.pageParam; // Access the last document ID from context
-
-    // Modify your query logic based on lastDocumentId
-
-    // Example query logic:
     var darepoolQuery = query(darepoolCollection);
 
     if (lastDocumentId) {
@@ -84,6 +102,7 @@ export const darepoolController = () => {
 
   return {
     getAllDares,
+    getDares,
     getDareById,
     createDare,
     updateDare,

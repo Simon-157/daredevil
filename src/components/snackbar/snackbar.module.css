@@ -1,0 +1,41 @@
+.snackbar {
+    position: fixed;
+    bottom: -50px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 9999;
+    display: none;
+    align-items: center;
+    justify-content: space-between;
+    color: #fff;
+    font-size: 1.2rem;
+    border-radius: 5px;
+    padding: 1rem;
+    transition: bottom 0.3s ease-in-out;
+    max-width: 500px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+  }
+
+  .open {
+    display: flex;
+    bottom: 20px;
+  }
+  
+  .message {
+    flex: 1;
+  }
+  
+  .closeButton {
+    border: none;
+    background: transparent;
+    color: #fff;
+    font-size: 1.2rem;
+    cursor: pointer;
+    margin-left: 1rem;
+    transition: transform 0.3s ease-in-out;
+  
+    &:hover {
+      transform: scale(1.2);
+    }
+  }
+  
