@@ -3,11 +3,11 @@ import { useEffect, useState } from "react";
 import { journeyController } from "../firebase/controllers/Journeys.controller";
 import useAuth from "./useAuth";
 
-const useJourneyStatus = () => {
+export const useJourneyStatus = () => {
   const { auth: authUser } = useAuth();
   const { hasJourneys } = journeyController();
 
-  const [hasOngoing, setHasOngoing] = useState(false);
+  const [hasOngoing, setHasOngoing] = useState(Boolean);
 
   useEffect(() => {
     async function fetchData() {
@@ -20,4 +20,3 @@ const useJourneyStatus = () => {
   return hasOngoing;
 };
 
-export default useJourneyStatus;
