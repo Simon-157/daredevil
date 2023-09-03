@@ -1,6 +1,5 @@
 import React from "react";
 import JourneysStyles from "./Journeys.module.css";
-
 type JourneysProps = {};
 
 const Journeys: React.FC<JourneysProps> = () => {

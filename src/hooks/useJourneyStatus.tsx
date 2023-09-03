@@ -1,22 +1,24 @@
-// useJourneyStatus.js
 import { useEffect, useState } from "react";
-import { journeyController } from "../firebase/controllers/Journeys.controller";
-import useAuth from "./useAuth";
+import { journeyController } from "../bass/controllers/Journeys.controller";
+import {useAuth} from "./useAuth";
 
 export const useJourneyStatus = () => {
   const { auth: authUser } = useAuth();
   const { hasJourneys } = journeyController();
 
-  const [hasOngoing, setHasOngoing] = useState(Boolean);
+  const [hasOngoing, setHasOngoing] = useState(false);
 
   useEffect(() => {
-    async function fetchData() {
-      const status = await hasJourneys(authUser!.user.id);
+    const fetchData = async () => {
+      const status = await hasJourneys(authUser!.user?.id);
       setHasOngoing(status);
-    }
+    };
+
     fetchData();
-  }, [hasJourneys, authUser!.user.id]);
+  }, [hasJourneys, authUser?.user?.id]);
 
   return hasOngoing;
 };
+
+
 

@@ -10,7 +10,7 @@ import NavbarStyles from "./Navbar.module.css";
 //utils
 import { PAGES, EXTRA_MENU } from "./pages";
 import { Logo } from "../../assets/icons/Icons";
-import { useFirebaseAuth } from "../../firebase/auth/auth";
+import { useFirebaseAuth } from "../../bass/auth/auth";
 const Navbar = () => {
   const { signOut: logout } = useFirebaseAuth()
   const [toggleClass, setToggleClass] = useState("extra__menu");

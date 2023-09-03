@@ -19,6 +19,7 @@ export const journeyController = () => {
             console.error("Error checking user journeys:", error);
             return false;
         }
+        
     };
 
     // Get all journeys created by a particular user

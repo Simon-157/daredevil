@@ -12,11 +12,15 @@ interface Props {
 }
 
 const variantColors = {
-  success: '#4caf50',
+  success: 'var(--app-hover-green)',
   warning: '#ff9800',
   error: '#f44336',
-  info: '#2196f3',
+  info: 'var(--app-blue)',
 };
+
+// Create an audio element for the beep sound
+const beepSound = new Audio('/notify.mp3'); 
+
 /**
  * This is a TypeScript React component for a custom snackbar with a message, variant, and onClose
  * function that automatically closes after 2 seconds.
@@ -30,6 +34,10 @@ const CustomSnackbar: React.FC<Props> = ({ message, variant, open, onClose }) =>
     useEffect(() => {
       if (open) {
         setIsVisible(true);
+
+        // Play the beep sound when the snackbar opens
+        beepSound.play();
+
         setTimeout(() => {
           setIsVisible(false);
           onClose();

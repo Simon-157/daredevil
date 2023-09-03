@@ -1,6 +1,6 @@
 import { useLocation, Outlet, Navigate } from "react-router-dom";
 import { AppFrame } from "../../components/app_frame/AppFrame";
-import useAuth from "../../hooks/useAuth";
+import {useAuth} from "../../hooks/useAuth";
 import { LOGIN } from "../../utils/routes";
 import { useQuery } from "react-query"; 
 import CustomLoader from "../../components/loader/loader";

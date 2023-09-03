@@ -1,0 +1,27 @@
+.comming__soon{
+    overflow: hidden;
+    animation: gradientAnimation 10s infinite;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    flex-flow: column;
+    justify-content: center;
+    align-items: center;
+    color: var(--app-green);
+    gap: 0.5em;
+}
+
+
+@keyframes gradientAnimation {
+    0% {
+      background: linear-gradient(-45deg, #471b3965, #080707, #202525da, #191a19);
+      background-size: 400% 400%;
+      background-position: 0% 50%;
+    }
+  
+    100% {
+      background: linear-gradient(-45deg, #471b3965, #080707, #202525da, #191a19);
+      background-size: 400% 400%;
+      background-position: 0% 50%;
+    }
+  }

@@ -7,7 +7,7 @@ interface AuthContextProps {
   setAuth: (auth?: AuthObject) => void; // Update the type
 }
 
-const useAuth = (): AuthContextProps => {
+export const useAuth = (): AuthContextProps => {
   const context = useContext(AuthContext);
   if (!context) {
     throw new Error("useAuth must be used within an AuthProvider");
@@ -15,4 +15,3 @@ const useAuth = (): AuthContextProps => {
   return context;
 };
 
-export default useAuth;

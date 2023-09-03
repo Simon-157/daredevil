@@ -1,12 +1,12 @@
 import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { useFirebaseAuth } from "../../../firebase/auth/auth";
+import { useFirebaseAuth } from "../../../bass/auth/auth";
 import Button from "../../../components/button/Button";
 import { GridOverlay } from "../../../components/overlay/Overlay";
 import loginStyles from "./login.module.css";
 import google from "../../../assets/google.svg";
 import email from "../../../assets/mail.svg";
-import useAuth from "../../../hooks/useAuth";
+import {useAuth} from "../../../hooks/useAuth";
 
 const Login: React.FC = () => {
   const navigate = useNavigate();

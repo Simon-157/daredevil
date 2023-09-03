@@ -5,7 +5,7 @@ import NoOngoingJourneyStyles from "./NoOngoingJourney.module.css";
 
 import { useNavigate } from "react-router-dom";
 import Button from "../../../../components/button/Button";
-import useAuth from "../../../../hooks/useAuth";
+import {useAuth} from "../../../../hooks/useAuth";
 
 const NoDareJourney = () => {
 

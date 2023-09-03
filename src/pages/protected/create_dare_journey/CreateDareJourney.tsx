@@ -4,10 +4,10 @@ import StageThree from "./stages/StageThree";
 import StageTwo from "./stages/StageTwo";
 import StageFour from "./stages/StageFour";
 import CreateDareJourneyStyles from "./CreateDareJourney.module.css";
-import { journeyController } from "../../../firebase/controllers/Journeys.controller";
+import { journeyController } from "../../../bass/controllers/Journeys.controller";
 import { Journey } from "../../../types/UserType";
 import { Timestamp } from "firebase/firestore";
-import { useFirebaseAuth } from "../../../firebase/auth/auth";
+import { useFirebaseAuth } from "../../../bass/auth/auth";
 import StageCircle from "../../../components/stage_circle/StageCircle";
 // import {Dare, JourneyDare } from "../../../types/FreakPoolType";
 

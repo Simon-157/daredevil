@@ -1,18 +1,19 @@
 import Button from "../../components/button/Button";
-import { useFirebaseAuth } from "../../firebase/auth/auth";
+import styles from "./home.module.css"
 
-const Homepage = () => {
-  // const { auth } = useAuth();
-  const {signInWithGoogle} = useFirebaseAuth()
 
-  
+const Home = () => {
   return (
-  <Button  type={""} onClick={signInWithGoogle}>
+    <div className={styles.comming__soon}>
+      <h1>Coming Soon</h1>
+      <span>Pushing you out of your comfort zone.
+      Stay tuned for updates!</span>
+        <p>for the meantime, explore a sneak of it</p>
 
-    Google    
-  </Button>
+      <Button  type="outlined" ><a href="/login">Explore</a></Button>
 
-  )
+    </div>
+  );
 };
 
-export default Homepage;
+export default Home;

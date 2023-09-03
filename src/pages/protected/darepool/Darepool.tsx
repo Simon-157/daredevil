@@ -2,7 +2,7 @@ import { useInfiniteQuery } from "react-query";
 import DarepoolStyles from "./Darepool.module.css";
 import Button from "../../../components/button/Button";
 import { Dare } from "../../../types/FreakPoolType";
-import { darepoolController } from "../../../firebase/controllers/DarePool.controller";
+import { darepoolController } from "../../../bass/controllers/DarePool.controller";
 import CustomLoader from "../../../components/loader/loader";
 
 const Darepool = () => {

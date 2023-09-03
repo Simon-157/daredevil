@@ -8,7 +8,7 @@ import StageStyles from "./Stage.module.css";
 import ProgressBar from "../../../../components/progress_bar/ProgressBar";
 import Button from "../../../../components/button/Button";
 import ChallengeBox from "../../../../components/challenge_box/ChallengeBox";
-import { darepoolController } from "../../../../firebase/controllers/DarePool.controller";
+import { darepoolController } from "../../../../bass/controllers/DarePool.controller";
 import { useQuery } from "react-query";
 import CustomLoader from "../../../../components/loader/loader";
 import { Dare, JourneyDare } from "../../../../types/FreakPoolType";
