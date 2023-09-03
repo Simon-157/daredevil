@@ -63,7 +63,7 @@ const StageThree: React.FC<StageThreeProps> = ({
                                             <div className={StageStyles.challenge__container__list}>
                                                 {dares?.slice(0, 50).map((dare: Dare, index) => {
                                                     return <ChallengeBox key={index}
-                                                        onClick={() => onSelect({ id: dare.id, dare_id: dare.id, milestone: "ongoing", short_name:dare.short_name } as JourneyDare)}>
+                                                        onClick={() => onSelect({ id: dare.id, dare_id: dare.id, milestone: "ongoing", short_name:dare.short_name, description:dare.description } as JourneyDare)}>
                                                         {dare.short_name}
                                                     </ChallengeBox>;
                                                 })}

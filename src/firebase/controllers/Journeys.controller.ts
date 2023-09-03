@@ -1,6 +1,5 @@
 import { firebaseApp } from "../config/firebase";
-import { getFirestore, collection, doc, addDoc, arrayRemove, arrayUnion, getDoc, updateDoc, getDocs, query, where } from "firebase/firestore";
-
+import { getFirestore, collection, doc, addDoc, getDoc, updateDoc, getDocs, query, where, DocumentReference } from "firebase/firestore";
 import { Journey } from "../../types/UserType";
 
 const db = getFirestore(firebaseApp);
@@ -62,26 +61,14 @@ export const journeyController = () => {
         await updateDoc(journeyRef, { milestone: newMilestone });
     };
 
-    // Method to abort a freak by a user
-    const abortFreak = async (
-        journeyId: string,
-        journeyFreakId: string
-    ): Promise<void> => {
-        const journeyFreakRef = doc(
-            journeyCollection,
-            `${journeyId}/journey_dares/${journeyFreakId}`
-        );
-        await updateDoc(journeyFreakRef, {
-            milestone: "aborted",
-        });
-    };
 
 
 
     // Method to mark a dare as done by a user
-    const markDareDone = async (
+    const updateJourneyDares = async (
         journeyId: string,
-        journeyDareId: string
+        journeyDareId: string,
+        key: string
     ): Promise<Boolean> => {
         if (!journeyId || !journeyDareId) {
             console.error("Invalid journeyId or journeyDareId");
@@ -93,7 +80,7 @@ export const journeyController = () => {
             const journeyDoc = await getDoc(journeyRef);
             if (!journeyDoc.exists()) {
                 console.error("Journey document not found");
-                return false; 
+                return false;
             }
             const journeyData = journeyDoc.data() as Journey;
             const indexToUpdate = journeyData.journey_dares.findIndex(
@@ -104,7 +91,16 @@ export const journeyController = () => {
                 return false;
             }
             // Update the milestone of the specific object in the array
-            journeyData.journey_dares[indexToUpdate].milestone = "passed";
+            switch (key) {
+                case "done":
+                    journeyData.journey_dares[indexToUpdate].milestone = "passed";
+                    break;
+                case "abort":
+                    journeyData.journey_dares[indexToUpdate].milestone = "aborted";
+                    break
+                default:
+                    return false;
+            }
             // Update the journey document with the modified array
             await updateDoc(journeyRef, {
                 journey_dares: journeyData.journey_dares,
@@ -120,8 +116,33 @@ export const journeyController = () => {
 
 
 
-    // Method to swap a journey and update milestones
-    const swapJourney = async (
+    // Separate function to update a journey's milestone by dare ID
+    const updateJourneyDareMilestone = async (
+        journeyRef: DocumentReference,
+        dareId: string,
+        milestone: string
+    ): Promise<void> => {
+        try {
+            const journeyDoc = await getDoc(journeyRef);
+            if (!journeyDoc.exists()) {
+                throw new Error("Journey document not found");
+            }
+            const journeyData = journeyDoc.data() as Journey;
+            const dareIndex = journeyData.journey_dares.findIndex(
+                (dare) => dare.dare_id === dareId
+            );
+            if (dareIndex === -1) {
+                throw new Error("Dare not found in the journey");
+            }
+            journeyData.journey_dares[dareIndex].milestone = milestone;
+            await updateDoc(journeyRef, { journey_dares: journeyData.journey_dares });
+        } catch (error) {
+            throw new Error(`Error updating dare milestone: ${error}`);
+        }
+    };
+
+    // Modify swapJourneyDare function
+    const swapJourneyDare = async (
         oldJourneyId: string,
         newJourneyId: string,
         oldDareId: string,
@@ -130,47 +151,27 @@ export const journeyController = () => {
         const oldJourneyRef = doc(journeyCollection, oldJourneyId);
         const newJourneyRef = doc(journeyCollection, newJourneyId);
 
-        const oldJourneySnapshot = await getDoc(oldJourneyRef);
-        const newJourneySnapshot = await getDoc(newJourneyRef);
+        try {
+            // Update old journey dare to "aborted"
+            await updateJourneyDareMilestone(oldJourneyRef, oldDareId, "aborted");
 
-        if (!oldJourneySnapshot.exists() || !newJourneySnapshot.exists()) {
-            throw new Error("Journey not found");
+            // Update new journey dare to "passed"
+            await updateJourneyDareMilestone(newJourneyRef, newDareId, "ongoing");
+
+            console.log("Dare swap completed successfully");
+        } catch (error) {
+            console.error(error);
+            throw new Error("Dare swap failed");
         }
-
-        const oldJourney = oldJourneySnapshot.data() as Journey;
-        const newJourney = newJourneySnapshot.data() as Journey;
-
-        const oldDareIndex = oldJourney.journey_dares.findIndex(
-            (dare) => dare.dare_id === oldDareId
-        );
-        const newDareIndex = newJourney.journey_dares.findIndex(
-            (dare) => dare.dare_id === newDareId
-        );
-
-        if (oldDareIndex === -1 || newDareIndex === -1) {
-            throw new Error("Freak not found in journey");
-        }
-
-        // Update milestones
-        oldJourney.journey_dares[oldDareIndex].milestone = "aborted";
-        newJourney.journey_dares[newDareIndex].milestone = "passed";
-
-        await updateDoc(oldJourneyRef, {
-            journey_freaks: arrayRemove(oldDareId),
-        });
-
-        await updateDoc(newJourneyRef, {
-            journey_freaks: arrayUnion(newDareId),
-        });
     };
+
 
     return {
         hasJourneys,
         getJourneysByUser,
         createJourney,
         updateJourneyMilestone,
-        swapJourney,
-        abortFreak,
-        markDareDone
+        swapJourneyDare,
+        updateJourneyDares
     };
 };

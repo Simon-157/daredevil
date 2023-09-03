@@ -14,7 +14,7 @@ import { useSnackbar } from "../../../../hooks/useSnackbar";
 
 const OnGoingJourney = () => {
   const { showSnackbar, snackbar } = useSnackbar();
-  const { getJourneysByUser, markDareDone } = journeyController();
+  const { getJourneysByUser, updateJourneyDares } = journeyController();
   const { auth } = useAuth();
   const [currentJourneys, setCurrentJourneys] = useState<Journey[]>([]); // Specify the type here
 
@@ -75,10 +75,29 @@ const OnGoingJourney = () => {
   });
 
   const [timeLeft, setTimeLeft] = useState(metrics.at(0)?.timeLeftFormatted);
-  const handleDoneClick = async () =>{
-    const res = await markDareDone(metrics.at(0)?.journeyId!, metrics.at(0)?.currentMission[0].id!);
-    res ? showSnackbar("Dare marked passed", "success") : showSnackbar("Couldn't mark done", "error")
+
+  const handleClick = async (key:string) =>{
+    switch (key) {
+      case "done":
+          const res = await updateJourneyDares(metrics.at(0)?.journeyId!, metrics.at(0)?.currentMission[0].id!, key="done");
+          res ? showSnackbar("Dare marked passed", "success") : showSnackbar("Couldn't mark done", "error")
+          break;
+      case "swap":
+          const ans = await updateJourneyDares(metrics.at(0)?.journeyId!, metrics.at(0)?.currentMission[0].id!, key="swap");
+          ans ? showSnackbar("Dare swapped", "info") : showSnackbar("Couldn't swap dare", "error")
+          break;
+      case "abort":
+          const req = await updateJourneyDares(metrics.at(0)?.journeyId!, metrics.at(0)?.currentMission[0].id!, key="abort");
+          req ? showSnackbar("Dare aborted ", "info") : showSnackbar("Couldn't abort dare", "error")
+          break;
+
+      default:
+        break;
+    }
+
   }
+
+  
   useEffect(() => {
     const intervalId = setInterval(() => {
       const startDate = currentJourneys[0]?.start_date.toDate();
@@ -130,7 +149,7 @@ const OnGoingJourney = () => {
         <div className={OngoingJourneyStyles.mission_stats}>
           <CircularProgressBar total={metrics.at(0)?.totalDares!} chunk={metrics.at(0)?.passedFreaks!} label="passed" bgColor={"white"} arcColor={"var(--app-green)"} />
           <CircularProgressBar total={metrics.at(0)?.totalDares!} chunk={metrics.at(0)?.swapsMade!} label="swaps" bgColor={"white"} arcColor={"var(--app-yellow)"} />
-          <CircularProgressBar total={metrics.at(0)?.totalDares!} chunk={metrics.at(0)?.abortedFreaks!} label="aborted" bgColor={"white"} arcColor={"--app-orange"} />
+          <CircularProgressBar total={metrics.at(0)?.totalDares!} chunk={metrics.at(0)?.abortedFreaks!} label="aborted" bgColor={"white"} arcColor={"var(--app-orange)"} />
         </div>
       </div>
       <div className={OngoingJourneyStyles.timer_action_buttons}>
@@ -142,7 +161,7 @@ const OnGoingJourney = () => {
         <div className={OngoingJourneyStyles.action_buttons}>
           {snackbar}
           <Button
-          onClick={async () => {await handleDoneClick()}}
+          onClick={async () => {await handleClick("done")}}
             style={{
               backgroundColor: "rgba(191,249,231,0.1)",
               minWidth: "2rem",
@@ -155,6 +174,7 @@ const OnGoingJourney = () => {
             <CorrectIcon /> <p>done</p>
           </Button>
           <Button
+          onClick={async () => {await handleClick("swap")}}
             style={{
               backgroundColor: "rgba(250,228,173,0.1)",
               minWidth: "2rem",
@@ -167,7 +187,8 @@ const OnGoingJourney = () => {
             <SwapIcon /> <p>swap</p>
           </Button>
           <Button
-            style={{
+          onClick={async () => {await handleClick("abort")}}
+          style={{
               backgroundColor: "rgba(244,152,103,0.1)",
               minWidth: "2rem",
               border: "none",
