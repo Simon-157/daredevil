@@ -1,31 +1,57 @@
 import React from "react";
 import JourneysStyles from "./Journeys.module.css";
+import CircularProgressBar from "../../../components/progress_bar/circular_progress_bar/CircularProgressBar";
+import useJourneyService from "../../../hooks/useUserJourneys";
+import { Journey } from "../../../types/UserType";
+import { useAuth } from "../../../hooks/useAuth";
+import { useNavigate } from "react-router-dom";
+import CustomLoader from "../../../components/loader/loader";
 type JourneysProps = {};
 
 const Journeys: React.FC<JourneysProps> = () => {
+  const {auth:authUser} = useAuth()
+  const { journeys, isLoading } = useJourneyService(authUser!.user.id);
   // const { auth } = useAuth();
-  // const navigate = useNavigate();
-  // const completedJourneys = auth.journeys.documents.filter(
-  //   (journey: Journey) => journey.milestone === "completed"
-  // );
-  // const abandonedJourneys = auth.journeys.documents.filter(
-  //   (journey: Journey) => journey.milestone === "abandoned"
-  // );
+  const navigate = useNavigate();
 
-  // const handleJourneyClick = (journey: Journey) => {
-  //   navigate(`/dashboard/journeys/${journey.id}`, { state: { journey } });
-  // };
+  const completedJourneys = journeys?.filter(
+    (journey: Journey) => journey.milestone === "completed"
+  );
+
+  const ongoingJourneys = journeys?.filter(
+    (journey: Journey) => journey.milestone === "ongoing"
+  );
+
+  const abandonedJourneys = journeys?.filter(
+    (journey: Journey) => journey.milestone === "abandoned"
+  );
+
+  const handleJourneyClick = (journey: Journey) => {
+    navigate(`/dashboard/journeys/${journey.id}`, { state: { journey } });
+  };
+
+  if(isLoading) return <CustomLoader />
 
   return (
     <div className={JourneysStyles.container}>
-      {/* <div className={JourneysStyles.stats}>
+      <div className={JourneysStyles.stats}>
+      <div className={JourneysStyles.completed}>
+          <div className={JourneysStyles.metric}>
+            <div className={JourneysStyles.metricValue}>
+              <CircularProgressBar
+                chunk={ongoingJourneys!.length}
+                total={journeys!.length}
+                label="Ongoing" bgColor={"white"} arcColor={"var(--app-yellow)"}              />
+            </div>
+          </div>
+        </div>
         <div className={JourneysStyles.completed}>
           <div className={JourneysStyles.metric}>
             <div className={JourneysStyles.metricValue}>
               <CircularProgressBar
-                chunk={completedJourneys.length}
-                total={auth.journeys.documents.length}
-                label="Completed" bgColor={""} arcColor={""}              />
+                chunk={completedJourneys!.length}
+                total={journeys!.length}
+                label="Completed" bgColor={"white"} arcColor={"var(--app-hover-green)"}              />
             </div>
           </div>
         </div>
@@ -33,43 +59,49 @@ const Journeys: React.FC<JourneysProps> = () => {
           <div className={JourneysStyles.metric}>
             <div className={JourneysStyles.metricValue}>
               <CircularProgressBar
-                chunk={abandonedJourneys.length}
-                total={auth.journeys.documents.length}
-                label="Abandoned" bgColor={""} arcColor={""}              />
+                chunk={abandonedJourneys!.length}
+                total={journeys!.length}
+                label="Abandoned" bgColor={"white"} arcColor={"var(--app-orange)"}              />
             </div>
           </div>
         </div>
       </div>
       <div className={JourneysStyles.journeyList}>
-        {auth.journeys.documents.map((journey: Journey) => (
+        {journeys?.map((journey: Journey) => (
           <div
             className={JourneysStyles.journey}
             key={journey.id}
             onClick={() => handleJourneyClick(journey)}
+
             style={{
-              borderColor: `${
+              borderColor:
                 journey.milestone === "completed"
                   ? "var(--app-green)"
-                  : "var(--app-orange)"
-              }`,
+                  : journey.milestone === "ongoing"
+                  ? "var(--app-yellow)"
+                  : "var(--app-orange)",
             }}
+            
+           
           >
             <h2>{journey.name}</h2>
             <br />
             <small
-              style={{
-                color: `${
-                  journey.milestone === "completed"
-                    ? "var(--app-green)"
-                    : "var(--app-orange)"
-                }`,
-              }}
+            style={{
+              color:
+                journey.milestone === "completed"
+                  ? "var(--app-green)"
+                  : journey.milestone === "ongoing"
+                  ? "var(--app-yellow)"
+                  : "var(--app-orange)",
+            }}
+             
             >
               {journey.milestone}
             </small>
           </div>
         ))}
-      </div> */}
+      </div>
     </div>
   );
 };

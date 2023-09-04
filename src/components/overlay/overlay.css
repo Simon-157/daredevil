@@ -16,7 +16,7 @@
 }
 
 .bg-grid {
-    background-image: url("../../../public/bg.svg");
+    background-image: url("/bg.svg");
 }
 
 .bg-center {
