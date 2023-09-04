@@ -6,7 +6,7 @@ import { JourneyDare } from "../../../types/FreakPoolType";
 import { useLocation } from "react-router-dom";
 
 type JourneyDetailsProps = {
-  journey:Journey
+
 };
 
 const JourneyDetails: React.FC<JourneyDetailsProps> = () => {
