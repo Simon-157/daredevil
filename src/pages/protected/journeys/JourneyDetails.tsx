@@ -14,7 +14,7 @@ const JourneyDetails: React.FC<JourneyDetailsProps> = () => {
   const location = useLocation();
 
   // Check if state exists and extract the journey
-  const journey = location.state?.journey;
+  const journey = location.state?.journey as Journey;
 
   return (
     <div
