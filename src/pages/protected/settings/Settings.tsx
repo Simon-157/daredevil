@@ -35,7 +35,6 @@ const Settings = () => {
           <h2>01-02-2023</h2>
         </section>
         <div className={ProfileStyles.edit_btns}> 
-
           <Button children={<h3>update</h3>} type={"solid"} />
           <Button children={<h3>delete</h3>} type={""} style={btnStyles}/>
         </div>

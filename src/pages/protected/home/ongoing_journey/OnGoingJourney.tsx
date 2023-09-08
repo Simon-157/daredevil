@@ -211,7 +211,6 @@ const OnGoingJourney = () => {
             experience and tips
           </small>
         </article>
-        <br />
         <Button style={{ padding: "0.5rem" }} type={""}>read</Button>
       </div>
     </div>

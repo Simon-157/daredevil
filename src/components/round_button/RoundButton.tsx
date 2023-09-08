@@ -3,12 +3,13 @@ import ButtonStyles from './RoundButton.module.css'
 
 interface RoundButtonProps {
   onClick: () => void;
-  children:ReactNode
+  children:ReactNode;
+  style?: { [key: string]: string };
 }
 
-const RoundButton: React.FC<RoundButtonProps> = ({ onClick, children }) => {
+const RoundButton: React.FC<RoundButtonProps> = ({ onClick, style, children }) => {
   return (
-    <button className={ButtonStyles.round__button} onClick={onClick}>
+    <button    style={style} className={ButtonStyles.round__button} onClick={onClick}>
       <span className={ButtonStyles.plus__icon}>{children}</span>
     </button>
   );

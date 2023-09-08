@@ -1,3 +1,20 @@
+export const PlusIcon = () => {
+  return (
+    <svg
+      width="38"
+      height="38"
+      viewBox="0 0 28 28"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        d="M12 4C11.4477 4 11 4.44772 11 5V11H5C4.44772 11 4 11.4477 4 12C4 12.5523 4.44772 13 5 13H11V19C11 19.5523 11.4477 20 12 20C12.5523 20 13 19.5523 13 19V13H19C19.5523 13 20 12.5523 20 12C20 11.4477 19.5523 11 19 11H13V5C13 4.44772 12.5523 4 12 4Z"
+        fill="currentColor"
+      />
+    </svg>
+  );
+};
+
 export const BoltIcon = () => {
   return (
     <svg
@@ -17,15 +34,20 @@ export const BoltIcon = () => {
 
 export const Google = () => {
   return (
-    <svg width="24" height="24"
+    <svg
+      width="24"
+      height="24"
       viewBox="0 0 24 24"
-      fill="none" xmlns="http://www.w3.org/2000/svg">
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
       <path
         d="M6 12C6 15.3137 8.68629 18 12 18C14.6124 18 16.8349 16.3304 17.6586 14H12V10H21.8047V14H21.8C20.8734 18.5645 16.8379 22 12 22C6.47715 22 2 17.5228 2 12C2 6.47715 6.47715 2 12 2C15.445 2 18.4831 3.742 20.2815 6.39318L17.0039 8.68815C15.9296 7.06812 14.0895 6 12 6C8.68629 6 6 8.68629 6 12Z"
-        fill="currentColor" />
+        fill="currentColor"
+      />
     </svg>
-  )
-}
+  );
+};
 
 export const GearIcon = () => {
   return (

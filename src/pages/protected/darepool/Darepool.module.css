@@ -46,11 +46,16 @@
   color: #aaa;
 }
 
-@media screen and (max-width: 768px) {
-  button {
-    display: none;
-  }
+.add_btn{
+  display: flex;
+  justify-content: flex-end;
+}
 
+@media screen and (max-width: 768px) {
+ 
+  .stats button{
+    display: none;;
+  }
   .dareList {
     width: 100%;
     padding: 1rem;
