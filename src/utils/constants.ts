@@ -7,16 +7,14 @@ export const titleInputStyle = {
     margin:'1rem'
   };
 
-export const descriptionInputStyle = {
+export const InputStyle = {
     display: 'flex',
     boxSizing: 'border-box',
-    background: '#1E1E1E',
+    background: '#2e2e2e',
     width: '40rem',
-    height: '10rem',
     margin:'1rem',
-    // input: {
-    //   height: '10rem',
-    // },
+    fontSize:'20px'
+
   };
 
 export const buttonStyle = {

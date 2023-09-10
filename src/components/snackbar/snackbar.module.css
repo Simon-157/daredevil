@@ -1,7 +1,7 @@
 .snackbar {
     position: fixed;
     bottom: -50px;
-    left: 60%;
+    left: 50%;
     transform: translateX(-50%);
     z-index: 9999;
     display: none;
@@ -18,11 +18,12 @@
 
   .open {
     display: flex;
-    bottom: 20px;
+    bottom: 10px;
   }
   
   .message {
     flex: 1;
+    width: max-content;
   }
   
   .closeButton {

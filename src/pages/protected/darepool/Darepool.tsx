@@ -6,6 +6,9 @@ import { darepoolController } from "../../../bass/controllers/DarePool.controlle
 import CustomLoader from "../../../components/loader/loader";
 import RoundButton from "../../../components/round_button/RoundButton";
 import { PlusIcon } from "../../../assets/icons/Icons";
+import Modal from "../../../components/modal/Modal";
+import CustomChallenge from "../custom_challenge/CustomChallenge";
+import { useModalContext } from "../../../contexts/ModalContext";
 
 
 const btnStyles = {
@@ -15,8 +18,8 @@ const btnStyles = {
 
 const Darepool = () => {
 
-
   const { getAllDares } = darepoolController();
+  const { isOpen, openModal, closeModal } = useModalContext();
 
   // Fetch dares using useInfiniteQuery for infinite scrolling
   const {
@@ -40,7 +43,8 @@ const Darepool = () => {
 
 
   if (status === "loading") {
-    return <CustomLoader />;
+    return <div style={{display:"flex", justifyContent:"center", alignContent:"center", height:"100vh", width:"90vw"}}><CustomLoader size="60" /></div>
+
   }
 
   if (status === "error") {
@@ -53,6 +57,7 @@ const Darepool = () => {
       <div className={DarepoolStyles.stats}>
         <h2>{data?.pages.flatMap(page => page).length} dares</h2>
           <Button
+          onClick={openModal}
           type="outlined"
           style={{
             padding: "10px",
@@ -67,7 +72,7 @@ const Darepool = () => {
         </Button>
 
       </div>
-      <div className={DarepoolStyles.dareList}>
+      <div className={DarepoolStyles.dareList} >
         {data?.pages.flatMap(page => page).map((dare: Dare) => (
           <article className={DarepoolStyles.dare} key={dare.id}>
             <h2>{dare.short_name}</h2>
@@ -93,10 +98,9 @@ const Darepool = () => {
         </Button>
       </div>
       <div className={DarepoolStyles.add_btn}>
-        <RoundButton style={btnStyles} onClick={function (): void {
-          throw new Error("Function not implemented.");
-        }} children={<PlusIcon />} />
+        <RoundButton style={btnStyles} onClick={openModal} children={<PlusIcon />} />
       </div>
+      <Modal isOpen={isOpen} onClose={closeModal} header={<h2>Create a custom dare</h2>} body={<CustomChallenge />} />
     </div>
   );
 };

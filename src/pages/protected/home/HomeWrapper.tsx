@@ -13,7 +13,7 @@ const HomeWrapper = () => {
   return (
     <>
       {isLoading || hasOngoing === undefined ? (
-        <CustomLoader size="60" />
+      <div style={{display:"flex", justifyContent:"center", alignContent:"center", height:"100vh", width:"90vw"}}><CustomLoader size="60"/></div>
       ) : !hasOngoing && hasOngoing !== undefined ? (
         <NoOngoingJourney />
       ) : (

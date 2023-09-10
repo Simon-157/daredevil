@@ -6,11 +6,10 @@ const Profile = () => {
 
   console.log(user?.photoURL);
   
-
   return (
     <div className={ProfileStyles.profile}>
       <div className={ProfileStyles.profile_picture}>
-        <img src={user?.photoURL || ""} alt="https://i.pravatar.cc/75" />
+        <img src={user?.photoURL || "https://i.pravatar.cc/75"} alt="profile" />
       </div>
       <div className={ProfileStyles.profile_details}>
         <section>
@@ -22,8 +21,8 @@ const Profile = () => {
           <h2>{user?.email}</h2>
         </section>
         <section>
-          <small>joined</small>
-          <h2>{user?.phoneNumber}</h2>
+          <small>Account key</small>
+          <h2>{user?.uid}</h2>
         </section>
       </div>
     </div>

@@ -33,7 +33,7 @@
   opacity: 0.5;
 }
 
-img {
+.imageColumn img {
   max-width: 100%;
   transform: scale(2);
   position: relative;
@@ -115,18 +115,38 @@ img {
 }
 
 .wrapper__roundButton {
-  margin: 1rem;
+  padding: 1rem;
+  display: flex;
+  gap: 1rem;
 }
 
 .wrapper__roundButton button {
   padding: 0.5em;
 }
 
+.add_btn_lg{
+  display: none;
+}
+
+.add_btn_sm{
+  display: flex;
+  position:"absolute";
+  right:"0"
+}
+
 @media (min-width: 768px) {
-  img {
+  .imageColumn img {
     transform: scale(1);
     top: 0;
     left: 0;
+  }
+
+  .add_btn_lg{
+    display: block;
+  }
+
+  .add_btn_sm{
+    display: none;
   }
 
   .challenge__container__list {

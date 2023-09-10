@@ -5,7 +5,7 @@ import React, { ChangeEvent, useState } from 'react';
 import GoBack from './GoBack';
 import Button from '../../../../components/button/Button';
 import Input from '../../../../components/input/Input';
-import { titleInputStyle, buttonStyle, descriptionInputStyle } from '../../../../utils/constants';
+import { titleInputStyle, buttonStyle, InputStyle } from '../../../../utils/constants';
 
 
 interface StageFourProps {
@@ -47,7 +47,7 @@ const StageFour: React.FC<StageFourProps> = ({ handleGoBack })=> {
         value={description}
         onChange={handleDescriptionChange}
         placeholder="challenge description"
-        style={descriptionInputStyle} // Apply custom style for description input
+        style={InputStyle} // Apply custom style for description input
       />
       <Button
         onClick={handleSubmit}

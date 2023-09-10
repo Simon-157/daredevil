@@ -2,14 +2,13 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
-    width: 100vw;
+    /* height: 100vh;
+    width: 100vw; */
 }
 
 .loader {
     border: 4px solid var(--app-background-2);
     border-top: 4px solid var(--app-blue);
-    /* This will be overridden by the 'color' prop */
     border-radius: 50%;
     width: 40px;
     height: 40px;

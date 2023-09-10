@@ -22,10 +22,12 @@ import { AuthProvider } from "./contexts/AuthContext";
 
 //constants
 import { HOMEPAGE, LOGIN, DASHBOARD, HOME, JOURNEYS, JOURNEYDETAILS, CHALLENGE, DAREPOOL, PROFILE, SETTINGS, CREATE_DARE_JOURNEY, PAGE_NOT_FOUND } from "./utils/routes";
+import { ModalProvider } from "./contexts/ModalContext";
 
 function App() {
   return (
     <AuthProvider>
+      <ModalProvider>
       <div className={AppStyles.app}>
         <Router>
           <Routes>
@@ -49,6 +51,7 @@ function App() {
           </Routes>
         </Router>
       </div>
+      </ModalProvider>
     </AuthProvider>
   );
 }

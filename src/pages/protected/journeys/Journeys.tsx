@@ -30,7 +30,7 @@ const Journeys: React.FC<JourneysProps> = () => {
     navigate(`/dashboard/journeys/${journey.id}`, { state: { journey } });
   };
 
-  if(isLoading) return <CustomLoader />
+  if(isLoading) return <div style={{display:"flex", justifyContent:"center", alignContent:"center", height:"100vh", width:"90vw"}}><CustomLoader /></div>
 
   return (
     <div className={JourneysStyles.container}>
